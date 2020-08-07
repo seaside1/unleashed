@@ -1,0 +1,26 @@
+spawn ssh admin@fubarhost
+
+Please login: admin
+Password: 
+Welcome to Ruckus Unleashed Network Command Line Interface
+ruckus> enable
+ruckus# show current-active-clients all
+Current Active Clients:
+  Clients:
+    Mac Address= 30:57:14:de:01:ee
+    OS/Type= iOS
+    Host Name= iphone
+    User/IP= 10.100.30.28
+    Role= 
+    Access Point= 8c:fe:74:2f:09:ee
+    BSSID= 8c:fe:74:af:09:ee
+    Connect Since=2020/07/04 08:31:28
+    Auth Method= Open
+    WLAN= MyCoolWlan5g-1
+    VLAN= 30
+    Channel= 36
+    Radio= 802.11ac
+    Signal= 24
+    Status= Authorized
+ 
+Last 300 Events/Activities:

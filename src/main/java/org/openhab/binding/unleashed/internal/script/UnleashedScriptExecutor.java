@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) 2010-2020 Contributors to the openHAB project
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
+package org.openhab.binding.unleashed.internal.script;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.openhab.binding.unleashed.internal.api.UnleashedException;
+import org.openhab.binding.unleashed.internal.context.UnleashedScriptContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * The {@link UnleashedScriptExecutor} Is used for executing scripts via command shell.
+ *
+ * @author Joseph (Seaside) Hagberg - Initial contribution
+ *
+ */
+public class UnleashedScriptExecutor {
+    private final Logger logger = LoggerFactory.getLogger(UnleashedScriptExecutor.class);
+    private int exitValue = -1;
+    private static final String PATTERN_REMOVE_ALL_EMPTY = "(?m)^[ \t]*\r?\n";
+    private static final String ERROR_FAILED_EXEC = "Failed to execute command, msg: {}";
+
+    public String executeScript(UnleashedScriptContext context) throws UnleashedException {
+        logger.debug("Executing: {}", context);
+        final ProcessBuilder processBuilder = new ProcessBuilder();
+        final String[] commandVector = context.getCommandVector();
+        logger.debug("Executing command: {}", Arrays.toString(context.getCommandVectorSafe()));
+
+        processBuilder.command(commandVector);
+        Process process;
+        try {
+            process = processBuilder.start();
+        } catch (IOException e) {
+            throw new UnleashedException("Could not execute command: " + e.getMessage());
+        }
+
+        String result;
+        try {
+            result = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8.name());
+        } catch (IOException e) {
+            throw new UnleashedException("Could not get command input: " + e.getMessage());
+        }
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            throw new UnleashedException("Got interrupted waiting for command: " + e.getMessage());
+        }
+
+        if (result.isEmpty()) {
+            try {
+                String errorResult = IOUtils.toString(process.getErrorStream(), StandardCharsets.UTF_8.name());
+                logger.warn(ERROR_FAILED_EXEC, errorResult);
+            } catch (IOException e) {
+                throw new UnleashedException("Could not get command input: " + e.getMessage());
+            }
+        }
+        exitValue = process.exitValue();
+        return result.trim().replaceAll(PATTERN_REMOVE_ALL_EMPTY, StringUtils.EMPTY);
+    }
+
+    public int getExitValue() {
+        return exitValue;
+    }
+}

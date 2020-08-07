@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="unleashed"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<bridge-type id="controller">
+		<label>Ruckus Unleashed Master Controller</label>
+		<description>The AP Acting as master controller for the unleashed network</description>
+		<config-description>
+			<parameter name="host" type="text" required="true">
+				<label>Hostname</label>
+				<description>Hostname or IP address of the Unleashed Master Controller</description>
+				<context>network-address</context>
+			</parameter>
+			<parameter name="port" type="integer" max="65535" min="1" required="false">
+				<label>Port</label>
+				<description>Port of the Ruckus Unleashed Master Controller CLI (default 22 ssh)</description>
+				<default>22</default>
+			</parameter>
+			<parameter name="username" type="text" required="true">
+				<label>Username</label>
+				<description>The username to access the Ruckus Unleashed cli</description>
+			</parameter>
+			<parameter name="password" type="text" required="true">
+				<label>Password</label>
+				<description>The password to access the Ruckus Unleashed cli</description>
+				<context>password</context>
+			</parameter>
+			<parameter name="refresh" type="integer" required="false">
+				<label>Refresh Interval</label>
+				<description>The refresh interval in seconds to poll the Ruckus Unleashed cli</description>
+				<default>30</default>
+			</parameter>
+			<parameter name="demo" type="boolean" required="false">
+				<label>Run bridge in demo mode</label>
+				<description>Run bridge in demo mode  simulating connected clients</description>
+				<default>false</default>
+			</parameter>
+		</config-description>
+	</bridge-type>
+	<thing-type id="client">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="controller" />
+		</supported-bridge-type-refs>
+		<label>Unleashed Wireless Client</label>
+		<description>A wireless client connected to a Unleashed Access Point</description>
+		<channels>
+			<channel id="online" typeId="online" />
+			<channel id="os" typeId="os" />
+			<channel id="host" typeId="host" />
+			<channel id="mac" typeId="mac" />
+			<channel id="ip" typeId="ip" />
+			<channel id="ap" typeId="ap" />
+			<channel id="bssid" typeId="bssid" />
+			<channel id="connected-since" typeId="connected-since" />
+			<channel id="auth-method" typeId="auth-method" />
+			<channel id="wlan" typeId="wlan" />
+			<channel id="vlan" typeId="vlan" />
+			<channel id="channel" typeId="channel" />
+			<channel id="radio" typeId="radio" />
+			<channel id="signal" typeId="signal" />
+			<channel id="status" typeId="status" />
+			<channel id="last-seen" typeId="last-seen" />
+			<channel id="blocked" typeId="blocked" />
+		</channels>
+		<representation-property>mac</representation-property>
+		<config-description>
+			<parameter name="mac" type="text" required="true">
+				<label>Mac address</label>
+				<description>The MAC address of the client</description>
+			</parameter>
+			<parameter name="considerHome" type="integer" required="false">
+				<label>Consider Home Interval</label>
+				<description>The interval in seconds to consider the client as home</description>
+				<default>180</default>
+			</parameter>
+		</config-description>
+	</thing-type>
+	<channel-type id="online">
+		<item-type>Switch</item-type>
+		<label>Online</label>
+		<description>Online status of the wireless client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="os">
+		<item-type>String</item-type>
+		<label>Operating System</label>
+		<description>Client Operating System</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="host">
+		<item-type>String</item-type>
+		<label>Host Name</label>
+		<description>Host Name of the client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="mac">
+		<item-type>String</item-type>
+		<label>MAC Address</label>
+		<description>MAC address of the client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="ip">
+		<item-type>String</item-type>
+		<label>IP Address</label>
+		<description>IP address of the client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="ap">
+		<item-type>String</item-type>
+		<label>Access Point</label>
+		<description>Access Point the wireless client is connected to</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="bssid">
+		<item-type>String</item-type>
+		<label>Wireless Network AP</label>
+		<description>Mac Address of Acess Point in use</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="connected-since">
+		<item-type>DateTime</item-type>
+		<label>Connected Since</label>
+		<description>Client has beeen connected since</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="auth-method">
+		<item-type>String</item-type>
+		<label>Authorization Method</label>
+		<description>Type of authorization method</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="vlan">
+		<item-type>Number</item-type>
+		<label>VLAN</label>
+		<description>The Virtual Local Area Network</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="wlan">
+		<item-type>String</item-type>
+		<label>Wireless network</label>
+		<description>The name of the Wireless Network</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="channel">
+		<item-type>Number</item-type>
+		<label>WiFi Channel</label>
+		<description>WiFi Channel in use by the client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="radio">
+		<item-type>String</item-type>
+		<label>WiFi Radio Type</label>
+		<description>Displays the wirless type of radio used by the client</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="signal">
+		<item-type>Number</item-type>
+		<label>Wireless Signal Strength</label>
+		<description>The clients wireless signal strength</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="status">
+		<item-type>String</item-type>
+		<label>Connection Status</label>
+		<description>Client Connection status, i.e is the client authorized</description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="last-seen">
+		<item-type>DateTime</item-type>
+		<label>Client last seen</label>
+		<description>Client was last seen </description>
+		<state readOnly="true"></state>
+	</channel-type>
+	<channel-type id="blocked">
+		<item-type>Switch</item-type>
+		<label>Blocked</label>
+		<description>Is device blocked</description>
+	</channel-type>
+</thing:thing-descriptions>

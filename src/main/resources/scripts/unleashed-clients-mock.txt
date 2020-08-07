@@ -1,0 +1,106 @@
+spawn ssh admin@fubarhost
+
+Please login: admin
+Password: 
+Welcome to Ruckus Unleashed Network Command Line Interface
+ruckus> enable
+ruckus# show current-active-clients all
+Current Active Clients:
+  Clients:
+    Mac Address= 40:31:3c:ad:3d:ee
+    OS/Type= Wemo Smart Switch
+    Host Name= 
+    User/IP= 10.100.40.19
+    Role= 
+    Access Point= d4:68:4d:03:66:ee
+    BSSID= d4:68:4d:83:66:ee
+    Connect Since=2020/06/27 02:39:06
+    Auth Method= Open
+    WLAN= MyCoolWlan2g
+    VLAN= 40
+    Channel= 1
+    Radio= 802.11gn
+    Signal= 59
+    Status= Authorized
+  Clients:
+    Mac Address= 00:19:86:21:93:ee
+    OS/Type= Ubuntu/Debian 5/Knoppix 6
+    Host Name= Rpi
+    User/IP= 10.100.40.24
+    Role= 
+    Access Point= d4:68:4d:03:66:ee
+    BSSID= d4:68:4d:83:66:c8
+    Connect Since=2020/06/22 07:45:34
+    Auth Method= Open
+    WLAN= MyCoolWlan2g
+    VLAN= 40
+    Channel= 1
+    Radio= 802.11gn
+    Signal= 45
+    Status= Authorized
+  Clients:
+    Mac Address= ac:5f:3e:a6:58:ee
+    OS/Type= Android
+    Host Name= Galaxy-android
+    User/IP= 10.100.20.36
+    Role= 
+    Access Point= d4:68:4d:03:68:ee
+    BSSID= d4:68:4d:03:68:38
+    Connect Since=2020/06/28 09:24:45
+    Auth Method= Open
+    WLAN= MyCoolWlan5g-Other
+    VLAN= 20
+    Channel= 6
+    Radio= 802.11gn
+    Signal= 51
+    Status= Authorized
+  Clients:
+    Mac Address= 50:50:a4:8f:61:ee
+    OS/Type= Android
+    Host Name= Galaxy-Tab-A
+    User/IP= 10.100.30.33
+    Role= 
+    Access Point= d4:68:4d:03:66:ee
+    BSSID= d4:68:4d:43:66:c8
+    Connect Since=2020/07/01 22:40:58
+    Auth Method= Open
+    WLAN= MyCoolWlan5g
+    VLAN= 30
+    Channel= 1
+    Radio= 802.11gn
+    Signal= 62
+    Status= Authorized
+  Clients:
+    Mac Address= 88:71:e5:f2:f5:ee
+    OS/Type= Android
+    Host Name= amazon-alexa
+    User/IP= 10.100.40.40
+    Role= 
+    Access Point= d4:68:4d:03:66:ee
+    BSSID= d4:68:4d:c3:66:ee
+    Connect Since=2020/07/02 20:41:44
+    Auth Method= Open
+    WLAN= MyCoolWlan2g
+    VLAN= 40
+    Channel= 149
+    Radio= 802.11an
+    Signal= 41
+    Status= Authorized
+  Clients:
+    Mac Address= c0:ee:fb:33:25:ee
+    OS/Type= Android
+    Host Name= android-2f15fd43349cdede
+    User/IP= 10.100.20.35
+    Role= 
+    Access Point= d4:68:4d:03:66:ee
+    BSSID= d4:68:4d:03:66:ee
+    Connect Since=2020/07/03 20:13:02
+    Auth Method= Open
+    WLAN= MyCoolWlan5g-Other
+    VLAN= 20
+    Channel= 1
+    Radio= 802.11gn
+    Signal= 55
+    Status= Authorized
+ 
+Last 300 Events/Activities:

@@ -1,0 +1,56 @@
+spawn ssh admin@10.0.1.14
+
+Please login: admin
+Password: 
+Welcome to Ruckus Unleashed Network Command Line Interface
+ruckus> enable
+ruckus# show l2acl name DenyAccessAll
+L2/MAC ACL:
+  ID:
+    2:
+      Name= DenyAccessAll
+      Description= DenyAccessToAll
+      Restriction= Deny only the stations listed below
+      Stations:
+        MAC Address= d4:68:4d:03:68:30
+        MAC Address= d4:68:4d:03:66:c0
+        MAC Address= 8c:fe:74:2f:09:c0
+ 
+ruckus# show current-active-clients all
+Current Active Clients:
+  Clients:
+    Mac Address= 40:31:3c:ad:3d:dd
+    OS/Type= Wemo Smart Switch
+    Host Name= 
+    User/IP= 10.0.40.19
+    Role= 
+    Access Point= d4:68:4d:03:66:c0
+    BSSID= d4:68:4d:83:66:c8
+    Connect Since=2020/07/24 02:39:32
+    Auth Method= Open
+    WLAN= Uggla
+    VLAN= 40
+    Channel= 6
+    Radio= 802.11gn
+    Signal= 69
+    Status= Authorized
+  Clients:
+    Mac Address= 00:19:86:21:93:87
+    OS/Type= Ubuntu/Debian 5/Knoppix 6
+    Host Name= bumblebee
+    User/IP= 10.0.40.24
+    Role= 
+    Access Point= d4:68:4d:03:68:30
+    BSSID= d4:68:4d:83:68:38
+    Connect Since=2020/07/24 02:29:25
+    Auth Method= Open
+    WLAN= Uggla
+    VLAN= 40
+    Channel= 3
+    Radio= 802.11gn
+    Signal= 32
+    Status= Authorized
+ 
+Last 300 Events/Activities:
+ 
+ruckus#
