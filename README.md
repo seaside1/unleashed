@@ -152,8 +152,7 @@ NULL=Unknown
 sitemaps/unleashed.sitemap
 
 ```
-sitemap unleashed label="Unleashed Binding"
-{
+sitemap unleashed label="Unleashed Binding" {
 	Frame {
 		 Group item=gUnleashed
 	}
