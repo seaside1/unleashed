@@ -84,11 +84,13 @@ public class UnleashedClientThingHandler
         return true;
     }
 
+    @SuppressWarnings("null")
     @Override
     protected void refreshChannel(UnleashedClient client, ChannelUID channelUID, UnleashedController controller) {
         boolean clientHome = isClientHome(client);
 
         String channelID = channelUID.getIdWithoutGroup();
+        @Nullable
         State state = UnDefType.NULL;
         logger.debug("Refresh Channel: {}", channelID);
         UnleashedChannel channel = UnleashedChannel.fromString(channelID);

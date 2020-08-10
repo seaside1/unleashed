@@ -12,6 +12,7 @@
  */
 package org.openhab.binding.unleashed.internal;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 
 /**
@@ -20,6 +21,7 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedBindingConstants {
 
     public static final String BINDING_ID = "unleashed";

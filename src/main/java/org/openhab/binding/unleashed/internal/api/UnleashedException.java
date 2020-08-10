@@ -12,11 +12,14 @@
  */
 package org.openhab.binding.unleashed.internal.api;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link UnleashedException} represents a binding specific {@link Exception}.
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedException extends Exception {
 
     private static final long serialVersionUID = -7422254981644510570L;

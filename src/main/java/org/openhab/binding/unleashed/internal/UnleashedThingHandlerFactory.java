@@ -12,6 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
@@ -29,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
 @Component(service = ThingHandlerFactory.class, configurationPid = "binding.unleashed")
+@NonNullByDefault
 public class UnleashedThingHandlerFactory extends BaseThingHandlerFactory {
 
     public UnleashedThingHandlerFactory() {
@@ -41,7 +44,7 @@ public class UnleashedThingHandlerFactory extends BaseThingHandlerFactory {
     }
 
     @Override
-    protected ThingHandler createHandler(Thing thing) {
+    protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
         if (UnleashedControllerThingHandler.supportsThingType(thingTypeUID)) {
             return new UnleashedControllerThingHandler((Bridge) thing);

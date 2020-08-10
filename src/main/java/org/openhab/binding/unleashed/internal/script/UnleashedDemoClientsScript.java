@@ -15,6 +15,8 @@ package org.openhab.binding.unleashed.internal.script;
 import java.io.File;
 import java.net.URL;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +26,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedDemoClientsScript extends UnleashedAbstractScript {
     protected static final String BASE_PATH = "scripts/";
     private static final String MOCK1 = "scripts/unleashed-clients1-mock.txt";
     private static final String MOCK2 = "scripts/unleashed-clients2-mock.txt";
-    private final File mock1File;
-    private final File mock2File;
+    private final @Nullable File mock1File;
+    private final @Nullable File mock2File;
     private final Logger logger = LoggerFactory.getLogger(UnleashedDemoClientsScript.class);
 
     public UnleashedDemoClientsScript() {
@@ -51,6 +54,7 @@ public class UnleashedDemoClientsScript extends UnleashedAbstractScript {
 
     @Override
     public String getArguments() {
+        @SuppressWarnings("null")
         final String path = Math.random() < 0.5 ? mock1File.getAbsolutePath() : mock2File.getAbsolutePath();
         logger.debug("Demo returning path: {}", path);
         return path;

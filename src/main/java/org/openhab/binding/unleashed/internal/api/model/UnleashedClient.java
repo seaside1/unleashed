@@ -14,6 +14,9 @@ package org.openhab.binding.unleashed.internal.api.model;
 
 import java.util.Calendar;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -21,46 +24,61 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedClient {
 
     @SerializedName("_mac")
-    private String mac;
+    private String mac = "";
 
+    @Nullable
     private Boolean online;
 
+    @Nullable
     private String os;
 
+    @Nullable
     private String host;
 
+    @Nullable
     private String ip;
 
+    @Nullable
     private String role;
 
+    @Nullable
     private String ap;
 
+    @Nullable
     private String bssid;
 
+    @Nullable
     private Calendar connectedSince;
 
+    @Nullable
     private Calendar lastSeen;
 
+    @Nullable
     private String authMethod;
 
+    @Nullable
     private String wlan;
 
-    private String vlan;
+    private String vlan = "";
 
+    @Nullable
     private Integer channel;
 
+    @Nullable
     private String radio;
 
-    private String signal;
+    private String signal = "";
 
+    @Nullable
     private String status;
 
     private boolean blocked;
 
-    public String getAp() {
+    public @Nullable String getAp() {
         return ap;
     }
 
@@ -68,7 +86,7 @@ public class UnleashedClient {
         this.ap = ap;
     }
 
-    public String getBssid() {
+    public @Nullable String getBssid() {
         return bssid;
     }
 
@@ -76,7 +94,7 @@ public class UnleashedClient {
         this.bssid = bssid;
     }
 
-    public String getAuthMethod() {
+    public @Nullable String getAuthMethod() {
         return authMethod;
     }
 
@@ -84,7 +102,7 @@ public class UnleashedClient {
         this.authMethod = authMethod;
     }
 
-    public String getWlan() {
+    public @Nullable String getWlan() {
         return wlan;
     }
 
@@ -100,7 +118,7 @@ public class UnleashedClient {
         this.vlan = vlan;
     }
 
-    public Integer getChannel() {
+    public @Nullable Integer getChannel() {
         return channel;
     }
 
@@ -108,11 +126,11 @@ public class UnleashedClient {
         this.channel = channel;
     }
 
-    public String getRadio() {
+    public @Nullable String getRadio() {
         return radio;
     }
 
-    public void setConnectedSince(Calendar connectedSince) {
+    public void setConnectedSince(@Nullable Calendar connectedSince) {
         this.connectedSince = connectedSince;
     }
 
@@ -128,7 +146,7 @@ public class UnleashedClient {
         this.signal = signal;
     }
 
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -136,7 +154,7 @@ public class UnleashedClient {
         this.status = status;
     }
 
-    public String getOs() {
+    public @Nullable String getOs() {
         return os;
     }
 
@@ -144,7 +162,7 @@ public class UnleashedClient {
         this.os = os;
     }
 
-    public String getHost() {
+    public @Nullable String getHost() {
         return host;
     }
 
@@ -152,7 +170,7 @@ public class UnleashedClient {
         this.host = host;
     }
 
-    public Calendar getConnectedSince() {
+    public @Nullable Calendar getConnectedSince() {
         return connectedSince;
     }
 
@@ -168,8 +186,8 @@ public class UnleashedClient {
         return mac;
     }
 
-    public String getIp() {
-        return this.ip;
+    public @Nullable String getIp() {
+        return ip;
     }
 
     @Override
@@ -181,7 +199,7 @@ public class UnleashedClient {
                 + ", blocked=" + blocked + "]";
     }
 
-    public String getRole() {
+    public @Nullable String getRole() {
         return role;
     }
 
@@ -189,7 +207,7 @@ public class UnleashedClient {
         this.role = role;
     }
 
-    public Boolean getOnline() {
+    public @Nullable Boolean getOnline() {
         return online;
     }
 
@@ -197,7 +215,7 @@ public class UnleashedClient {
         this.online = online;
     }
 
-    public Calendar getLastSeen() {
+    public @Nullable Calendar getLastSeen() {
         return lastSeen;
     }
 

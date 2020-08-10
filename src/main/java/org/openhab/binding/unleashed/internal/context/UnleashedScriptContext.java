@@ -15,6 +15,8 @@ package org.openhab.binding.unleashed.internal.context;
 import java.io.File;
 import java.net.URL;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.script.UnleashedAbstractScript;
 import org.slf4j.Logger;
@@ -25,13 +27,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedScriptContext {
     protected static final String TMP_FILE_SUFFIX_SCRIPT = ".sh";
     protected final UnleashedAbstractScript script;
     private final Logger logger = LoggerFactory.getLogger(UnleashedScriptContext.class);
     protected static final String ERROR_RESOURCE = "Can't find resource: {}";
     protected static final String DEBUG_RESOURCE = "Script Resources: {}";
-    protected final File tempScriptFile;
+    protected final @Nullable File tempScriptFile;
 
     public UnleashedScriptContext(UnleashedAbstractScript script) {
         this.script = script;
@@ -44,6 +47,7 @@ public class UnleashedScriptContext {
         return new String[] { script.getCommand(), getScriptPath(), script.getArguments() };
     }
 
+    @SuppressWarnings("null")
     public void deleteTempScriptFile() {
         try {
             tempScriptFile.delete();
@@ -56,7 +60,8 @@ public class UnleashedScriptContext {
         return getCommandVector();
     }
 
-    protected String getScriptPath() {
+    @SuppressWarnings("null")
+    protected @Nullable String getScriptPath() {
         return tempScriptFile == null ? null : tempScriptFile.getAbsolutePath();
     }
 

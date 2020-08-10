@@ -12,11 +12,14 @@
  */
 package org.openhab.binding.unleashed.internal.script;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link UnleashedScriptCliBlockClient} Script for blocking clients
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedScriptCliBlockClient extends UnleashedScriptCliRefresh {
 
     private static final String SCRIPT_UNLEASHED_BLOCK_CLIENT = "scripts/unleashed-block-client.sh";

@@ -13,12 +13,14 @@
 package org.openhab.binding.unleashed.internal.script;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
 /**
  * The {@link UnleashedScriptCliRefresh} Script for fetching connected unleashed clients
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedScriptCliRefresh extends UnleashedAbstractScript {
 
     private static final String SCRIPT_UNLEASHED_REFRESH = BASE_PATH + "unleashed-refresh.sh";

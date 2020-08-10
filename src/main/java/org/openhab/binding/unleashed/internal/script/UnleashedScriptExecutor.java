@@ -18,6 +18,8 @@ import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.context.UnleashedScriptContext;
 import org.slf4j.Logger;
@@ -29,15 +31,17 @@ import org.slf4j.LoggerFactory;
  * @author Joseph (Seaside) Hagberg - Initial contribution
  *
  */
+@NonNullByDefault
 public class UnleashedScriptExecutor {
     private final Logger logger = LoggerFactory.getLogger(UnleashedScriptExecutor.class);
     private int exitValue = -1;
     private static final String PATTERN_REMOVE_ALL_EMPTY = "(?m)^[ \t]*\r?\n";
     private static final String ERROR_FAILED_EXEC = "Failed to execute command, msg: {}";
 
-    public String executeScript(UnleashedScriptContext context) throws UnleashedException {
+    public String executeScript(@Nullable UnleashedScriptContext context) throws UnleashedException {
         logger.debug("Executing: {}", context);
         final ProcessBuilder processBuilder = new ProcessBuilder();
+        @SuppressWarnings("null")
         final String[] commandVector = context.getCommandVector();
         logger.debug("Executing command: {}", Arrays.toString(context.getCommandVectorSafe()));
 

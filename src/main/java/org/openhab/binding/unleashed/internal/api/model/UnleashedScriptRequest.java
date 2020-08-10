@@ -12,6 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal.api.model;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.context.UnleashedScriptContext;
 import org.openhab.binding.unleashed.internal.script.UnleashedScriptExecutor;
@@ -25,12 +27,13 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T> The response type expected as a result of the request's execution
  */
+@NonNullByDefault
 public class UnleashedScriptRequest {
 
-    private UnleashedScriptContext context;
+    private @Nullable UnleashedScriptContext context;
     private final Logger logger = LoggerFactory.getLogger(UnleashedScriptRequest.class);
 
-    private String result;
+    private @Nullable String result;
     private int exitCode;
     // Public API
 
@@ -38,7 +41,8 @@ public class UnleashedScriptRequest {
         this.context = context;
     }
 
-    public String execute() throws UnleashedException {
+    @SuppressWarnings("null")
+    public @Nullable String execute() throws UnleashedException {
         try {
             final UnleashedScriptExecutor exec = new UnleashedScriptExecutor();
             result = exec.executeScript(context);

@@ -12,6 +12,7 @@
  */
 package org.openhab.binding.unleashed.internal.context;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.unleashed.internal.script.UnleashedAbstractScript;
 
 /**
@@ -20,6 +21,7 @@ import org.openhab.binding.unleashed.internal.script.UnleashedAbstractScript;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedCliInfoContext extends UnleashedCliLoginContext {
 
     protected final String acl;

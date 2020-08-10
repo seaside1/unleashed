@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.UnleashedClientThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedConnectException;
@@ -47,6 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedController {
 
     private static final String ACL = "openhab";
@@ -92,7 +93,8 @@ public class UnleashedController {
         }
     }
 
-    public String removePassword(String result) {
+    @SuppressWarnings("null")
+    public @Nullable String removePassword(@Nullable String result) {
         return result.replaceAll(password, "******");
     }
 
@@ -139,6 +141,7 @@ public class UnleashedController {
         insightCache.put(client);
     }
 
+    @SuppressWarnings("null")
     public void blockClient(UnleashedClient client) throws UnleashedException {
         logger.debug("Executing block");
         UnleashedScriptCliBlockClient script = new UnleashedScriptCliBlockClient();
@@ -149,6 +152,7 @@ public class UnleashedController {
         logger.debug("Request Cli Blcok Client result size: {}", result.length());
     }
 
+    @SuppressWarnings("null")
     public void unBlockClient(UnleashedClient client) throws UnleashedException {
         logger.debug("Executing block");
         UnleashedScriptCliUnBlockClient script = new UnleashedScriptCliUnBlockClient();
@@ -159,6 +163,7 @@ public class UnleashedController {
         logger.debug("Request Cli Blcok Client result size: {}", result.length());
     }
 
+    @SuppressWarnings("null")
     public void updateClientsCache(boolean demo) throws UnleashedException {
         try {
             logger.debug("Updating clients cache");
@@ -209,7 +214,7 @@ public class UnleashedController {
         return new UnleashedScriptRequest(demoContext);
     }
 
-    public @Nullable UnleashedClient getClient(@NonNull UnleashedClientThingConfig config) {
+    public @Nullable UnleashedClient getClient(UnleashedClientThingConfig config) {
         UnleashedClient client = null;
         String mac = config.getMac();
         knownClientMacAddresses.add(mac.toLowerCase());

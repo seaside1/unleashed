@@ -13,6 +13,7 @@
 package org.openhab.binding.unleashed.internal.script;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
 /**
  * The {@link UnleashedScriptCheckDeps} Is used for checking dependencies via command line.
@@ -20,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Joseph (Seaside) Hagberg - Initial contribution
  *
  */
+@NonNullByDefault
 public class UnleashedScriptCheckDeps extends UnleashedAbstractScript {
 
     private static final String SCRIPT_UNLEASHED_CHECK_DEPS = BASE_PATH + "unleashed-check-deps.sh";

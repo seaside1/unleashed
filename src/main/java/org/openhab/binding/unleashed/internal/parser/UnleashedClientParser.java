@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedClientParser {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final SimpleDateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -99,13 +101,13 @@ public class UnleashedClientParser {
         return keyValues;
     }
 
+    @NonNullByDefault
     private class KeyValue {
 
         private String key;
         private String value;
 
         private KeyValue(String property) {
-            System.out.println(property);
             final String[] keyValue = StringUtils.split(property, "=");
             key = keyValue[0].trim();
             value = keyValue[1].trim();

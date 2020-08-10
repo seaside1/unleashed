@@ -13,6 +13,8 @@
 package org.openhab.binding.unleashed.internal.api.model;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,24 +23,25 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedAccessPoint {
 
     @SerializedName("_id")
-    private String id;
+    private @Nullable String id;
 
-    private String mac;
+    private @Nullable String mac;
 
-    private String model;
+    private @Nullable String model;
 
-    private String name;
+    private @Nullable String name;
 
-    private String ip;
+    private @Nullable String ip;
 
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
-    public String getModel() {
+    public @Nullable String getModel() {
         return model;
     }
 
@@ -46,7 +49,7 @@ public class UnleashedAccessPoint {
         return StringUtils.defaultIfBlank(name, mac);
     }
 
-    public String getMac() {
+    public @Nullable String getMac() {
         return mac;
     }
 
@@ -55,7 +58,7 @@ public class UnleashedAccessPoint {
         return String.format("UnleashedAccessPoint{mac: '%s', name: '%s', model: '%s', ip: %s}", mac, name, model, ip);
     }
 
-    public String getIp() {
+    public @Nullable String getIp() {
         return ip;
     }
 

@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.handler.UnleashedClientThingHandler;
 import org.osgi.framework.FrameworkUtil;
 import org.slf4j.Logger;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(UnleashedUtil.class);
@@ -37,9 +40,10 @@ public class UnleashedUtil {
     protected static final String ERROR_RESOURCE = "Can't find resource: {}";
     protected static final String DEBUG_RESOURCE = "Script Resources: {}";
 
-    public static File getResourceAsFile(URL resource, String suffix) {
+    public static @Nullable File getResourceAsFile(@Nullable URL resource, String suffix) {
         File tempResourceFile = null;
         try {
+            @SuppressWarnings("null")
             InputStream is = resource.openStream();
             tempResourceFile = File.createTempFile(TMP_FILE_PREFIX, suffix);
             FileUtils.copyInputStreamToFile(is, tempResourceFile);
@@ -49,7 +53,7 @@ public class UnleashedUtil {
         return tempResourceFile;
     }
 
-    public static URL getResourceUrl(String resource) {
+    public static @Nullable URL getResourceUrl(String resource) {
         URL resourceUrl = null;
         try {
             resourceUrl = FrameworkUtil.getBundle(UnleashedClientThingHandler.class).getResource(resource);

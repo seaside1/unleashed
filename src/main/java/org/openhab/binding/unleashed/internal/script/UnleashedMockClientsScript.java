@@ -12,11 +12,14 @@
  */
 package org.openhab.binding.unleashed.internal.script;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link UnleashedMockClientsScript} Mock for mocking connected clients
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedMockClientsScript extends UnleashedAbstractScript {
     protected static final String BASE_PATH = "scripts/";
     private String mockPath;

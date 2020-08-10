@@ -13,6 +13,7 @@
 package org.openhab.binding.unleashed.internal;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.unleashed.internal.handler.UnleashedClientThingHandler;
 
 /**
@@ -21,6 +22,7 @@ import org.openhab.binding.unleashed.internal.handler.UnleashedClientThingHandle
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedClientThingConfig {
 
     /* Client Id should mac address */

@@ -12,11 +12,14 @@
  */
 package org.openhab.binding.unleashed.internal.script;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link UnleashedAbstractScript} Script for fetching connected unleashed clients
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public abstract class UnleashedAbstractScript {
 
     protected static final String BASE_PATH = "scripts/";

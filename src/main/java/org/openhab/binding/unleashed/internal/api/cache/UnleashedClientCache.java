@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
 
 /**
@@ -25,6 +27,7 @@ import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
  *
  * @author Joseph Hagber - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedClientCache {
 
     private final Map<String, UnleashedClient> macToUnleashedClient = new HashMap<>();
@@ -37,7 +40,7 @@ public class UnleashedClientCache {
         return client.getMac().toLowerCase();
     }
 
-    public UnleashedClient getClient(String mac) {
+    public @Nullable UnleashedClient getClient(String mac) {
         return macToUnleashedClient.get(mac);
     }
 

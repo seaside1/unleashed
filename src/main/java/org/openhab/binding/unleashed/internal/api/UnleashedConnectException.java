@@ -12,11 +12,14 @@
  */
 package org.openhab.binding.unleashed.internal.api;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link UnleashedConnectException} represents a binding specific {@link Exception}.
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
+@NonNullByDefault
 public class UnleashedConnectException extends UnleashedException {
 
     /**
