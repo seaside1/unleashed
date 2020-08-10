@@ -19,7 +19,7 @@ set host [lindex $argv 2]
 set port [lindex $argv 3]
 set list [lindex $argv 4]
 spawn ssh $username@$host
-expect {
+expect -timeout 1 {
 	"Are you sure you want to continue connecting" {
                 send "yes\r"
         }
