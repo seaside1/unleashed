@@ -1,6 +1,6 @@
 # Unleashed Binding
 
-This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, displaying of  basic information as well as blocking / unblocking clients from the network.
+This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, displaying of  basic information as well as blocking / unblocking clients from the network. The binding relies on shell executing expect scripts. All parsing and client handling is done in java.
 
 ## Dependencies
 * Linux (guess it could work in windows or on Mac, as long as you can install expect, not tested though)
