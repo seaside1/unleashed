@@ -25,7 +25,7 @@ import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
  *
  * The cache uses mac address as key
  *
- * @author Joseph Hagber - Initial contribution
+ * @author Joseph Hagberg - Initial contribution
  */
 @NonNullByDefault
 public class UnleashedClientCache {

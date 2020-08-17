@@ -162,8 +162,8 @@ public class UnleashedControllerThingHandler extends BaseBridgeHandler {
         } catch (UnleashedException e) {
             updateStatus(OFFLINE, COMMUNICATION_ERROR, STATUS_DESCRIPTION_COMMUNICATION_ERROR);
         } catch (Exception e) {
-            logger.warn("Unhandled exception while refreshing the Unleashed Controller {} - {}", getThing().getUID(),
-                    e.getMessage());
+            logger.warn("Unhandled exception while refreshing the Unleashed Controller {} - {} ", getThing().getUID(),
+                    e.getMessage(), e);
             updateStatus(OFFLINE, COMMUNICATION_ERROR, e.getMessage());
         }
     }
