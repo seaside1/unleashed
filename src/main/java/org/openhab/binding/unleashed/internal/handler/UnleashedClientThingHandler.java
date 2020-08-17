@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.smarthome.core.library.types.DateTimeType;
@@ -90,7 +91,7 @@ public class UnleashedClientThingHandler
         boolean clientHome = isClientHome(client);
 
         String channelID = channelUID.getIdWithoutGroup();
-        @Nullable
+        @NonNull
         State state = UnDefType.NULL;
         logger.debug("Refresh Channel: {}", channelID);
         UnleashedChannel channel = UnleashedChannel.fromString(channelID);
@@ -152,9 +153,7 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case SIGNAL:
-                if (clientHome && client.getSignal() != null) {
-                    state = new DecimalType(client.getSignal());
-                }
+                state = createDecimalType(clientHome, client.getSignal());
                 break;
             case STATUS:
                 if (clientHome && StringUtils.isNotBlank(client.getStatus())) {
@@ -162,9 +161,7 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case VLAN:
-                if (clientHome && client.getVlan() != null) {
-                    state = new DecimalType(client.getVlan());
-                }
+                state = createDecimalType(clientHome, client.getVlan());
                 break;
             case WLAN:
                 if (clientHome && StringUtils.isNotBlank(client.getWlan())) {
@@ -187,6 +184,18 @@ public class UnleashedClientThingHandler
         if (state != UnDefType.NULL) {
             updateState(channelID, state);
         }
+    }
+
+    private @NonNull State createDecimalType(boolean clientHome, String decimalString) {
+        State state = UnDefType.NULL;
+        if (clientHome && decimalString != null && !decimalString.isEmpty()) {
+            try {
+                state = new DecimalType(decimalString);
+            } catch (Exception x) {
+                logger.warn("Failed to convert to decimal type, string={}", decimalString);
+            }
+        }
+        return state;
     }
 
     @Override
