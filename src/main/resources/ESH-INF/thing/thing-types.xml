@@ -122,7 +122,7 @@
 	<channel-type id="connected-since">
 		<item-type>DateTime</item-type>
 		<label>Connected Since</label>
-		<description>Client has beeen connected since</description>
+		<description>Client has been connected since</description>
 		<state readOnly="true"></state>
 	</channel-type>
 	<channel-type id="auth-method">
