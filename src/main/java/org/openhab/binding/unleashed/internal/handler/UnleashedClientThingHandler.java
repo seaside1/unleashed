@@ -215,17 +215,18 @@ public class UnleashedClientThingHandler
     @SuppressWarnings("null")
     private void handleBlockedCommand(UnleashedClient client, ChannelUID channelUID, Command command)
             throws UnleashedException {
-        if (!(command instanceof OnOffType)) {
-            logger.warn("Ignoring unsupported command = {} for channel = {} - valid commands types are: OnOffType",
-                    command, channelUID);
-            return;
-        }
+        synchronized (this) {
+            if (!(command instanceof OnOffType)) {
+                logger.warn("Ignoring unsupported command = {} for channel = {} - valid commands types are: OnOffType",
+                        command, channelUID);
+                return;
+            }
 
-        if (command == OnOffType.ON) {
-            getController().blockClient(client);
-        } else {
-            getController().unBlockClient(client);
+            if (command == OnOffType.ON) {
+                getController().blockClient(client);
+            } else {
+                getController().unBlockClient(client);
+            }
         }
     }
-
 }
