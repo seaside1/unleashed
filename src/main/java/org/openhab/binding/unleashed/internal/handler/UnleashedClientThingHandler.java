@@ -175,7 +175,7 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case BLOCKED:
-                state = OnOffType.from(client.isBlocked());
+                /** Don't refresh */
                 break;
             default:
                 break;
@@ -186,9 +186,9 @@ public class UnleashedClientThingHandler
         }
     }
 
-    private @NonNull State createDecimalType(boolean clientHome, String decimalString) {
+    private State createDecimalType(boolean clientHome, String decimalString) {
         State state = UnDefType.NULL;
-        if (clientHome && decimalString != null && !decimalString.isEmpty()) {
+        if (clientHome && !decimalString.trim().isEmpty()) {
             try {
                 state = new DecimalType(decimalString);
             } catch (Exception x) {
@@ -222,6 +222,8 @@ public class UnleashedClientThingHandler
                 return;
             }
 
+            logger.info("Setting client blocked = {} mac: {}, ip: {}", command == OnOffType.ON, client.getMac(),
+                    client.getIp());
             if (command == OnOffType.ON) {
                 getController().blockClient(client);
             } else {
