@@ -11,6 +11,7 @@
 			<parameter name="host" type="text" required="true">
 				<label>Hostname</label>
 				<description>Hostname or IP address of the Unleashed Master Controller</description>
+				<default>master</default>
 				<context>network-address</context>
 			</parameter>
 			<parameter name="port" type="integer" max="65535" min="1" required="false">
@@ -30,7 +31,7 @@
 			<parameter name="refresh" type="integer" required="false">
 				<label>Refresh Interval</label>
 				<description>The refresh interval in seconds to poll the Ruckus Unleashed cli</description>
-				<default>30</default>
+				<default>10</default>
 			</parameter>
 			<parameter name="demo" type="boolean" required="false">
 				<label>Run bridge in demo mode</label>
@@ -122,7 +123,7 @@
 	<channel-type id="connected-since">
 		<item-type>DateTime</item-type>
 		<label>Connected Since</label>
-		<description>Client has been connected since</description>
+		<description>Client has beeen connected since</description>
 		<state readOnly="true"></state>
 	</channel-type>
 	<channel-type id="auth-method">
