@@ -103,7 +103,6 @@ public class UnleashedController {
                 new UnleashedScriptCliLogin());
         logger.debug("Creating new UnleashedCliContext using: {}", context);
         return new UnleashedScriptRequest(context);
-
     }
 
     public void stop() throws UnleashedException {

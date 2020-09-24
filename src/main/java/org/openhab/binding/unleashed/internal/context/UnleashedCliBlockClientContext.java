@@ -53,5 +53,4 @@ public class UnleashedCliBlockClientContext extends UnleashedCliInfoContext {
     public String getMac() {
         return mac;
     }
-
 }

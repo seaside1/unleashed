@@ -30,7 +30,6 @@ public class UnleashedCliInfoContext extends UnleashedCliLoginContext {
             UnleashedAbstractScript script) {
         super(username, password, host, port, script);
         this.acl = acl;
-
     }
 
     @Override

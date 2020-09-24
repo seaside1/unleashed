@@ -69,5 +69,4 @@ public class UnleashedScriptContext {
     public String toString() {
         return "UnleashedScriptContext [script=" + script + "]";
     }
-
 }

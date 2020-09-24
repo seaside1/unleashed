@@ -69,5 +69,4 @@ public class UnleashedCliLoginContext extends UnleashedScriptContext {
         return "UnleashedCliLoginContext [username=" + username + ", password= ******" + ", host=" + host + ", port="
                 + port + "]";
     }
-
 }
