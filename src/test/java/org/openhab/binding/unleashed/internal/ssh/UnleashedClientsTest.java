@@ -74,5 +74,4 @@ public class UnleashedClientsTest {
         Assert.assertNotNull(blockedClients);
         Assert.assertEquals(3, blockedClients.size());
     }
-
 }

@@ -40,5 +40,4 @@ public class UnleashedScriptCheckDeps extends UnleashedAbstractScript {
     public String getArguments() {
         return StringUtils.EMPTY;
     }
-
 }

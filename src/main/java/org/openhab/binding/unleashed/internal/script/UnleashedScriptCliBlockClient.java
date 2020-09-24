@@ -28,5 +28,4 @@ public class UnleashedScriptCliBlockClient extends UnleashedScriptCliRefresh {
     public String getScript() {
         return SCRIPT_UNLEASHED_BLOCK_CLIENT;
     }
-
 }

@@ -35,35 +35,35 @@
 			</parameter>
 			<parameter name="demo" type="boolean" required="false">
 				<label>Run bridge in demo mode</label>
-				<description>Run bridge in demo mode  simulating connected clients</description>
+				<description>Run bridge in demo mode simulating connected clients</description>
 				<default>false</default>
 			</parameter>
 		</config-description>
 	</bridge-type>
 	<thing-type id="client">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="controller" />
+			<bridge-type-ref id="controller"/>
 		</supported-bridge-type-refs>
 		<label>Unleashed Wireless Client</label>
 		<description>A wireless client connected to a Unleashed Access Point</description>
 		<channels>
-			<channel id="online" typeId="online" />
-			<channel id="os" typeId="os" />
-			<channel id="host" typeId="host" />
-			<channel id="mac" typeId="mac" />
-			<channel id="ip" typeId="ip" />
-			<channel id="ap" typeId="ap" />
-			<channel id="bssid" typeId="bssid" />
-			<channel id="connected-since" typeId="connected-since" />
-			<channel id="auth-method" typeId="auth-method" />
-			<channel id="wlan" typeId="wlan" />
-			<channel id="vlan" typeId="vlan" />
-			<channel id="channel" typeId="channel" />
-			<channel id="radio" typeId="radio" />
-			<channel id="signal" typeId="signal" />
-			<channel id="status" typeId="status" />
-			<channel id="last-seen" typeId="last-seen" />
-			<channel id="blocked" typeId="blocked" />
+			<channel id="online" typeId="online"/>
+			<channel id="os" typeId="os"/>
+			<channel id="host" typeId="host"/>
+			<channel id="mac" typeId="mac"/>
+			<channel id="ip" typeId="ip"/>
+			<channel id="ap" typeId="ap"/>
+			<channel id="bssid" typeId="bssid"/>
+			<channel id="connected-since" typeId="connected-since"/>
+			<channel id="auth-method" typeId="auth-method"/>
+			<channel id="wlan" typeId="wlan"/>
+			<channel id="vlan" typeId="vlan"/>
+			<channel id="channel" typeId="channel"/>
+			<channel id="radio" typeId="radio"/>
+			<channel id="signal" typeId="signal"/>
+			<channel id="status" typeId="status"/>
+			<channel id="last-seen" typeId="last-seen"/>
+			<channel id="blocked" typeId="blocked"/>
 		</channels>
 		<representation-property>mac</representation-property>
 		<config-description>
