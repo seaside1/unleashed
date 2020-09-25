@@ -56,6 +56,9 @@ public class UnleashedClientParser {
                     .forEach(rawClient -> createUnleashedClient(clients, getKeyValues(rawClient.split("\\r|\n"))));
         } catch (Exception x) {
             logger.error(ERROR_PARSING_CLIENTS, x.getMessage());
+            if (logger.isDebugEnabled()) { // Avoid string creation
+                logger.debug("Failed to parse clients. Original clientString: {}", cliClientsString);
+            }
             throw new UnleashedParserException("Failed to parse clients");
         }
         return clients;
@@ -101,7 +104,6 @@ public class UnleashedClientParser {
         return keyValues;
     }
 
-    @NonNullByDefault
     private class KeyValue {
 
         private String key;
