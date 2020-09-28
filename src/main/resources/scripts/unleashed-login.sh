@@ -17,12 +17,7 @@ set username [lindex $argv 0]
 set password [lindex $argv 1]
 set host [lindex $argv 2]
 set port [lindex $argv 3]
-spawn ssh $username@$host
-expect -timeout 1 {
-	"Are you sure you want to continue connecting" {
-                send "yes\r"
-        }
-}
+spawn ssh -o "StrictHostKeyChecking no" $username@$host 
 expect "Please login:"
 send "$username\r"
 expect "Password:"
