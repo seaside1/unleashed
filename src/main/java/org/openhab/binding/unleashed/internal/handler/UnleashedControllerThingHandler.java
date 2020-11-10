@@ -171,7 +171,7 @@ public class UnleashedControllerThingHandler extends BaseBridgeHandler {
     @SuppressWarnings("null")
     private void refresh() throws UnleashedException {
         if (controller != null) {
-            logger.debug("Refreshing the Unleased Controller {}", getThing().getUID());
+            logger.debug("Refreshing the Unleashed Controller {}", getThing().getUID());
             controller.refresh(config.isDemo());
             getThing().getThings().forEach((thing) -> {
                 if (thing.getHandler() instanceof UnleashedBaseThingHandler) {
