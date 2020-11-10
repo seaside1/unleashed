@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 
 /**
- * The {@link UnleasedBindingConstants} class defines common constants, which are
+ * The {@link UnleashedBindingConstants} class defines common constants, which are
  * used across the Ruckus Unleashed binding.
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
