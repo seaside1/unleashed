@@ -182,7 +182,7 @@ public class UnleashedController {
             throw e1;
         } catch (Exception x) {
             logger.error("Caught Exception during refresh: {}", x.getMessage(), x);
-            throw new UnleashedException(x.getCause());
+            throw new UnleashedException(x);
         }
     }
 
