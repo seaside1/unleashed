@@ -110,6 +110,8 @@ to do so. Note if you don't want to use block / unblock functionality this is no
 
 ## Full Example
 
+Please add things using the OpenHAB GUI. I've kept the unleashed.things for reference.
+
 things/unleashed.things
 
 ```
