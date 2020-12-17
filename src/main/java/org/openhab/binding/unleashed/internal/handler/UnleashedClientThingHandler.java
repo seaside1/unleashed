@@ -12,8 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal.handler;
 
-import static org.eclipse.smarthome.core.thing.ThingStatus.*;
-import static org.eclipse.smarthome.core.thing.ThingStatusDetail.CONFIGURATION_ERROR;
+import static org.openhab.core.thing.ThingStatus.*;
+import static org.openhab.core.thing.ThingStatusDetail.CONFIGURATION_ERROR;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -22,22 +22,22 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.smarthome.core.library.types.DateTimeType;
-import org.eclipse.smarthome.core.library.types.DecimalType;
-import org.eclipse.smarthome.core.library.types.OnOffType;
-import org.eclipse.smarthome.core.library.types.StringType;
-import org.eclipse.smarthome.core.thing.ChannelUID;
-import org.eclipse.smarthome.core.thing.Thing;
-import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.types.Command;
-import org.eclipse.smarthome.core.types.State;
-import org.eclipse.smarthome.core.types.UnDefType;
 import org.openhab.binding.unleashed.internal.UnleashedBindingConstants;
 import org.openhab.binding.unleashed.internal.UnleashedChannel;
 import org.openhab.binding.unleashed.internal.UnleashedClientThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedController;
+import org.openhab.core.library.types.DateTimeType;
+import org.openhab.core.library.types.DecimalType;
+import org.openhab.core.library.types.OnOffType;
+import org.openhab.core.library.types.StringType;
+import org.openhab.core.thing.ChannelUID;
+import org.openhab.core.thing.Thing;
+import org.openhab.core.thing.ThingTypeUID;
+import org.openhab.core.types.Command;
+import org.openhab.core.types.State;
+import org.openhab.core.types.UnDefType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

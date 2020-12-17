@@ -12,24 +12,15 @@
  */
 package org.openhab.binding.unleashed.internal.handler;
 
-import static org.eclipse.smarthome.core.thing.ThingStatus.OFFLINE;
-import static org.eclipse.smarthome.core.thing.ThingStatus.ONLINE;
-import static org.eclipse.smarthome.core.thing.ThingStatusDetail.*;
+import static org.openhab.core.thing.ThingStatus.OFFLINE;
+import static org.openhab.core.thing.ThingStatus.ONLINE;
+import static org.openhab.core.thing.ThingStatusDetail.*;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.smarthome.core.thing.Bridge;
-import org.eclipse.smarthome.core.thing.ChannelUID;
-import org.eclipse.smarthome.core.thing.ThingStatus;
-import org.eclipse.smarthome.core.thing.ThingStatusDetail;
-import org.eclipse.smarthome.core.thing.ThingStatusInfo;
-import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
-import org.eclipse.smarthome.core.thing.binding.builder.ThingStatusInfoBuilder;
-import org.eclipse.smarthome.core.types.Command;
 import org.openhab.binding.unleashed.internal.UnleashedBindingConstants;
 import org.openhab.binding.unleashed.internal.UnleashedControllerThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedConnectException;
@@ -37,6 +28,15 @@ import org.openhab.binding.unleashed.internal.api.UnleashedDependencyException;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedController;
+import org.openhab.core.thing.Bridge;
+import org.openhab.core.thing.ChannelUID;
+import org.openhab.core.thing.ThingStatus;
+import org.openhab.core.thing.ThingStatusDetail;
+import org.openhab.core.thing.ThingStatusInfo;
+import org.openhab.core.thing.ThingTypeUID;
+import org.openhab.core.thing.binding.BaseBridgeHandler;
+import org.openhab.core.thing.binding.builder.ThingStatusInfoBuilder;
+import org.openhab.core.types.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,6 +118,7 @@ public class UnleashedControllerThingHandler extends BaseBridgeHandler {
             }
             controller = null;
         }
+        super.dispose();
     }
 
     @Override
