@@ -13,10 +13,8 @@
 package org.openhab.binding.unleashed.internal.script;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.apache.commons.io.IOUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
@@ -67,9 +65,9 @@ public class UnleashedScriptExecutor {
 
         if (result.isEmpty()) {
             try {
-                String errorResult = IOUtils.toString(process.getErrorStream(), StandardCharsets.UTF_8.name());
+                String errorResult = UnleashedUtil.getInputStreamAsString(process.getErrorStream());
                 logger.warn(ERROR_FAILED_EXEC, errorResult);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new UnleashedException("Could not get command input: " + e.getMessage());
             }
         }
