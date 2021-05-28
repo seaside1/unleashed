@@ -58,6 +58,12 @@ public class UnleashedUtil {
         return tempResourceFile;
     }
 
+    public static String getInputStreamAsString(InputStream stream) {
+        String asString = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).lines()
+                .collect(Collectors.joining(System.lineSeparator()));
+        return asString;
+    }
+
     private static void copyInputStreamToFile(InputStream is, File targetFile) throws IOException {
         java.nio.file.Files.copy(is, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         try {
