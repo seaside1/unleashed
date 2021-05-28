@@ -12,8 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal.script;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 
 /**
  * The {@link UnleashedScriptCheckDeps} Is used for checking dependencies via command line.
@@ -38,6 +38,6 @@ public class UnleashedScriptCheckDeps extends UnleashedAbstractScript {
 
     @Override
     public String getArguments() {
-        return StringUtils.EMPTY;
+        return UnleashedUtil.EMPTY;
     }
 }

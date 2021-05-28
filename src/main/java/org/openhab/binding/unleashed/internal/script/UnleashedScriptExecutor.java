@@ -17,10 +17,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.context.UnleashedScriptContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +55,8 @@ public class UnleashedScriptExecutor {
 
         String result;
         try {
-            result = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8.name());
-        } catch (IOException e) {
+            result = UnleashedUtil.toString(process.getInputStream());
+        } catch (Exception e) {
             throw new UnleashedException("Could not get command input: " + e.getMessage());
         }
         try {
@@ -74,7 +74,7 @@ public class UnleashedScriptExecutor {
             }
         }
         exitValue = process.exitValue();
-        return result.trim().replaceAll(PATTERN_REMOVE_ALL_EMPTY, StringUtils.EMPTY);
+        return result.trim().replaceAll(PATTERN_REMOVE_ALL_EMPTY, UnleashedUtil.EMPTY);
     }
 
     public int getExitValue() {

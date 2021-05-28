@@ -20,10 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +43,14 @@ public class UnleashedClientParser {
         List<UnleashedClient> clients = new ArrayList<UnleashedClient>();
         try {
             logger.debug("Parsing clients from string size: {}", cliClientsString.length());
-            String clientsTrimmed = StringUtils.substringAfter(cliClientsString, "Current Active Clients:");
-            String clientsTrimmedLast = StringUtils.substringBeforeLast(clientsTrimmed, "Last");
+            String clientsTrimmed = UnleashedUtil.substringAfter(cliClientsString, "Current Active Clients:");
+            String clientsTrimmedLast = UnleashedUtil.substringBeforeLast(clientsTrimmed, "Last");
             int indexLast = clientsTrimmed.lastIndexOf("Last");
             clientsTrimmedLast = clientsTrimmed.substring(0, indexLast);
             logger.debug("Clients trimmed last size: {}", clientsTrimmedLast.length());
             List<String> rawClients = new ArrayList<String>();
             Arrays.stream(clientsTrimmedLast.split("Clients\\:")).filter(rawClient -> rawClient.trim().length() > 1)
-                    .forEach(rawClient -> rawClients.add(StringUtils.trim(rawClient)));
+                    .forEach(rawClient -> rawClients.add(rawClient.trim()));
 
             rawClients.stream()
                     .forEach(rawClient -> createUnleashedClient(clients, getKeyValues(rawClient.split("\\r|\n"))));
@@ -110,7 +110,7 @@ public class UnleashedClientParser {
         private String value;
 
         private KeyValue(String property) {
-            final String[] keyValue = StringUtils.split(property, "=");
+            final String[] keyValue = UnleashedUtil.split(property, "=");
             key = keyValue[0].trim();
             value = keyValue[1].trim();
         }

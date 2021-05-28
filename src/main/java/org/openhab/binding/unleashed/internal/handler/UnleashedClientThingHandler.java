@@ -18,7 +18,6 @@ import static org.openhab.core.thing.ThingStatusDetail.CONFIGURATION_ERROR;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -26,6 +25,7 @@ import org.openhab.binding.unleashed.internal.UnleashedBindingConstants;
 import org.openhab.binding.unleashed.internal.UnleashedChannel;
 import org.openhab.binding.unleashed.internal.UnleashedClientThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedController;
 import org.openhab.core.library.types.DateTimeType;
@@ -97,17 +97,17 @@ public class UnleashedClientThingHandler
         UnleashedChannel channel = UnleashedChannel.fromString(channelID);
         switch (channel) {
             case AP:
-                if (clientHome && StringUtils.isNotBlank(client.getAp())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getAp())) {
                     state = StringType.valueOf(client.getAp());
                 }
                 break;
             case AUTH_METHOD:
-                if (clientHome && StringUtils.isNotBlank(client.getAuthMethod())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getAuthMethod())) {
                     state = StringType.valueOf(client.getAuthMethod());
                 }
                 break;
             case BSSID:
-                if (clientHome && StringUtils.isNotBlank(client.getBssid())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getBssid())) {
                     state = StringType.valueOf(client.getBssid());
                 }
                 break;
@@ -123,17 +123,17 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case HOST:
-                if (clientHome && StringUtils.isNotBlank(client.getHost())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getHost())) {
                     state = StringType.valueOf(client.getHost());
                 }
                 break;
             case IP:
-                if (clientHome && StringUtils.isNotBlank(client.getIp())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getIp())) {
                     state = StringType.valueOf(client.getIp());
                 }
                 break;
             case MAC:
-                if (clientHome && StringUtils.isNotBlank(client.getMac())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getMac())) {
                     state = StringType.valueOf(client.getMac());
                 }
                 break;
@@ -143,12 +143,12 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case OS:
-                if (clientHome && StringUtils.isNotBlank(client.getOs())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getOs())) {
                     state = StringType.valueOf(client.getOs());
                 }
                 break;
             case RADIO:
-                if (clientHome && StringUtils.isNotBlank(client.getRadio())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getRadio())) {
                     state = StringType.valueOf(client.getRadio());
                 }
                 break;
@@ -156,7 +156,7 @@ public class UnleashedClientThingHandler
                 state = createDecimalType(clientHome, client.getSignal());
                 break;
             case STATUS:
-                if (clientHome && StringUtils.isNotBlank(client.getStatus())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getStatus())) {
                     state = StringType.valueOf(client.getStatus());
                 }
                 break;
@@ -164,7 +164,7 @@ public class UnleashedClientThingHandler
                 state = createDecimalType(clientHome, client.getVlan());
                 break;
             case WLAN:
-                if (clientHome && StringUtils.isNotBlank(client.getWlan())) {
+                if (clientHome && UnleashedUtil.isNotBlank(client.getWlan())) {
                     state = StringType.valueOf(client.getWlan());
                 }
                 break;

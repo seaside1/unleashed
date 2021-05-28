@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.UnleashedClientThingConfig;
@@ -25,6 +24,7 @@ import org.openhab.binding.unleashed.internal.api.UnleashedConnectException;
 import org.openhab.binding.unleashed.internal.api.UnleashedDependencyException;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.api.cache.UnleashedClientCache;
 import org.openhab.binding.unleashed.internal.context.UnleashedCliBlockClientContext;
 import org.openhab.binding.unleashed.internal.context.UnleashedCliInfoContext;
@@ -219,7 +219,7 @@ public class UnleashedController {
         knownClientMacAddresses.add(mac.toLowerCase());
         logger.debug("Adding mac to ThingUsedCache: {} sizeOf ThingUsed: {}", mac, knownClientMacAddresses.size());
         Calendar lastSeen = null;
-        if (StringUtils.isNotBlank(mac)) {
+        if (UnleashedUtil.isNotBlank(mac)) {
             synchronized (this) {
                 client = getClient(mac);
                 lastSeen = client.getLastSeen();
