@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +38,10 @@ public class UnleashedBlockedClientsParser {
         List<String> blockedClients = new ArrayList<String>();
         try {
             logger.debug("Parsing blocked clients from string size: {}", cliInfoResult.length());
-            String blockedClientsTrimmed = StringUtils.substringAfter(cliInfoResult, "L2/MAC ACL:");
-            String blockedClientsTrimmedLast = StringUtils.substringBefore(blockedClientsTrimmed, "ruckus#");
-            String blockedClientsTrimmedMac = StringUtils.substringAfter(blockedClientsTrimmedLast, "Stations:").trim();
+            String blockedClientsTrimmed = UnleashedUtil.substringAfter(cliInfoResult, "L2/MAC ACL:");
+            String blockedClientsTrimmedLast = UnleashedUtil.substringBefore(blockedClientsTrimmed, "ruckus#");
+            String blockedClientsTrimmedMac = UnleashedUtil.substringAfter(blockedClientsTrimmedLast, "Stations:")
+                    .trim();
             logger.debug("BlockedClients trimmed last size: {}", blockedClientsTrimmedMac.length());
             Arrays.stream(blockedClientsTrimmedMac.split("MAC Address="))
                     .filter(clientRaw -> clientRaw.trim().length() == MAC_ADDRESS_LENGTH)

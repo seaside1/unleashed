@@ -12,8 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.handler.UnleashedControllerThingHandler;
 
 /**
@@ -58,7 +58,8 @@ public class UnleashedControllerThingConfig {
     }
 
     public boolean isValid() {
-        return StringUtils.isNotBlank(host) && StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password);
+        return UnleashedUtil.isNotBlank(host) && UnleashedUtil.isNotBlank(username)
+                && UnleashedUtil.isNotBlank(password);
     }
 
     @Override

@@ -12,8 +12,8 @@
  */
 package org.openhab.binding.unleashed.internal;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.handler.UnleashedClientThingHandler;
 
 /**
@@ -35,7 +35,7 @@ public class UnleashedClientThingConfig {
     }
 
     public void setMac(String mac) {
-        this.mac = StringUtils.lowerCase(StringUtils.strip(mac));
+        this.mac = UnleashedUtil.lowerCaseOrBlank(UnleashedUtil.strip(mac));
     }
 
     public void setConsiderHome(int considerHome) {
@@ -47,12 +47,12 @@ public class UnleashedClientThingConfig {
     }
 
     public UnleashedClientThingConfig tidy() {
-        mac = StringUtils.lowerCase(StringUtils.strip(mac));
+        mac = UnleashedUtil.lowerCaseOrBlank(UnleashedUtil.strip(mac));
         return this;
     }
 
     public boolean isValid() {
-        return StringUtils.isNotBlank(mac);
+        return UnleashedUtil.isNotBlank(mac);
     }
 
     @Override

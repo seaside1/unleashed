@@ -12,12 +12,16 @@
  */
 package org.openhab.binding.unleashed.internal.api;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.StandardCopyOption;
+import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.handler.UnleashedClientThingHandler;
@@ -39,6 +43,7 @@ public class UnleashedUtil {
 
     protected static final String ERROR_RESOURCE = "Can't find resource: {}";
     protected static final String DEBUG_RESOURCE = "Script Resources: {}";
+    public static final String EMPTY = "";
 
     public static @Nullable File getResourceAsFile(@Nullable URL resource, String suffix) {
         File tempResourceFile = null;
@@ -46,11 +51,19 @@ public class UnleashedUtil {
             @SuppressWarnings("null")
             InputStream is = resource.openStream();
             tempResourceFile = File.createTempFile(TMP_FILE_PREFIX, suffix);
-            FileUtils.copyInputStreamToFile(is, tempResourceFile);
+            UnleashedUtil.copyInputStreamToFile(is, tempResourceFile);
         } catch (IOException e) {
             logger.error(ERROR_RESOURCE, e.getMessage());
         }
         return tempResourceFile;
+    }
+
+    private static void copyInputStreamToFile(InputStream is, File targetFile) throws IOException {
+        java.nio.file.Files.copy(is, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        try {
+            is.close();
+        } catch (Exception x) {
+        }
     }
 
     public static @Nullable URL getResourceUrl(String resource) {
@@ -74,5 +87,49 @@ public class UnleashedUtil {
         }
         logger.debug(DEBUG_RESOURCE, resourceUrl);
         return resourceUrl;
+    }
+
+    public static String defaultIfBlank(@Nullable String str, @Nullable String defaultStr) {
+        return str == null || str.isBlank() ? (defaultStr == null ? "" : defaultStr) : str;
+    }
+
+    public static boolean isNotBlank(@Nullable String mac) {
+        return mac != null ? !mac.isBlank() : false;
+    }
+
+    public static String substringAfter(String textString, String separator) {
+        return textString.substring(textString.indexOf(separator) + separator.length());
+    }
+
+    public static String substringBefore(String textString, String separator) {
+        return textString.substring(0, textString.indexOf(separator));
+    }
+
+    public static String substringBeforeLast(String textString, String separator) {
+        return textString.substring(0, textString.lastIndexOf(separator));
+    }
+
+    public static String[] split(@Nullable String str, String separator) {
+        if (str == null) {
+            return new String[0];
+        }
+        return str.split(separator);
+    }
+
+    public static String toString(InputStream inputStream) {
+        return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines()
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public static @Nullable String strip(@Nullable String str) {
+        return str == null ? null : str.trim();
+    }
+
+    public static @Nullable String lowerCase(@Nullable String str) {
+        return str == null ? null : str.toLowerCase();
+    }
+
+    public static String lowerCaseOrBlank(@Nullable String str) {
+        return str == null ? EMPTY : str.toLowerCase();
     }
 }

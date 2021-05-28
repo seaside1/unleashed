@@ -12,9 +12,9 @@
  */
 package org.openhab.binding.unleashed.internal.api.model;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
+import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -46,7 +46,7 @@ public class UnleashedAccessPoint {
     }
 
     public String getName() {
-        return StringUtils.defaultIfBlank(name, mac);
+        return UnleashedUtil.defaultIfBlank(name, mac);
     }
 
     public @Nullable String getMac() {
