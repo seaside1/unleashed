@@ -12,6 +12,7 @@
  */
 package org.openhab.binding.unleashed.internal.api.cache;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,10 @@ public class UnleashedClientCache {
 
     public @Nullable UnleashedClient getClient(String mac) {
         return macToUnleashedClient.get(mac);
+    }
+
+    public Collection<UnleashedClient> getClients() {
+        return macToUnleashedClient.values();
     }
 
     public void clear() {

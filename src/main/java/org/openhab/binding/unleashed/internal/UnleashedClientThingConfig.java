@@ -31,7 +31,7 @@ public class UnleashedClientThingConfig {
     private int considerHome = 180;
 
     public String getMac() {
-        return mac;
+        return UnleashedUtil.lowerCaseOrBlank(UnleashedUtil.strip(mac));
     }
 
     public void setMac(String mac) {
