@@ -167,6 +167,12 @@ sitemap unleashed label="Unleashed Binding" {
 }
 ```
 
+## Changelog
+# BETA8
+- Added auto discovery
+# BETA7
+- OpenHAB 3.1x compatability by removing apache-commons
+
 ## Roadmap
 
 * Reboot Single AP or Controller
