@@ -137,7 +137,6 @@ public class UnleashedController {
 
     private void upateInternalCache(UnleashedClient client) {
         clientsCache.put(client);
-        insightCache.put(client);
     }
 
     @SuppressWarnings("null")
@@ -172,6 +171,7 @@ public class UnleashedController {
             logger.debug("Request Cli Info result size: {}", result.length());
 
             List<UnleashedClient> clients = clientParser.parseClients(result);
+            getInsightCache().putAll(clients);
             clients.stream().forEach(client -> logger.debug("Client: {}", client.toString()));
             clientsCache.clear();
             clients.stream().filter(client -> knownClientMacAddresses.contains(client.getMac().toLowerCase()))
@@ -196,7 +196,7 @@ public class UnleashedController {
         UnleashedClient client = clientsCache.getClient(mac);
         logger.debug("Fetching client from cache: {}", client);
         if (client == null) {
-            client = insightCache.getClient(mac);
+            client = getInsightCache().getClient(mac);
             logger.debug("Fetching client from Insight: {}", client);
 
         }
@@ -204,7 +204,7 @@ public class UnleashedController {
             logger.debug("Client not found creating new one with mac: {}", mac);
             client = new UnleashedClient();
             client.setMac(mac);
-            insightCache.put(client);
+            getInsightCache().put(client);
         }
         return client;
     }
@@ -252,5 +252,9 @@ public class UnleashedController {
                 new UnleashedScriptCliRefresh());
         logger.debug("Creating new UnleashedCliContext using: {}", context);
         return new UnleashedScriptRequest(context);
+    }
+
+    public UnleashedClientCache getInsightCache() {
+        return insightCache;
     }
 }

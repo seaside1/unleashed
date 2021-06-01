@@ -12,6 +12,11 @@
  */
 package org.openhab.binding.unleashed.internal;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.core.thing.ThingTypeUID;
 
@@ -30,10 +35,19 @@ public class UnleashedBindingConstants {
     public static final ThingTypeUID THING_TYPE_CONTROLLER = new ThingTypeUID(BINDING_ID, "controller");
     public static final ThingTypeUID THING_TYPE_WIRELESS_CLIENT = new ThingTypeUID(BINDING_ID, "client");
 
+    public static final Set<ThingTypeUID> SUPPORTED_DEVICE_THING_TYPES_UIDS = Collections
+            .unmodifiableSet(Stream.of(THING_TYPE_CONTROLLER, THING_TYPE_WIRELESS_CLIENT).collect(Collectors.toSet()));
+
     /* Parameters */
     public static final String PARAMETER_HOST = "host";
     public static final String PARAMETER_PORT = "port";
     public static final String PARAMETER_USERNAME = "username";
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_REFRESH = "refresh";
+
+    public static final String CLIENT_PROP_HOST = "host";
+    public static final String CLIENT_PROP_MAC = "mac";
+    public static final String CLIENT_PROP_OS = "os";
+    public static final String CLIENT_PROP_IP = "ip";
+    public static final String CLIENT_PROP_WLAN = "wlan";
 }
