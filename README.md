@@ -1,34 +1,29 @@
 # Unleashed Binding
 
-This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, view  basic network information as well as blocking / unblocking clients from the network. The binding relies on shell executing expect scripts. All parsing and client handling is done in java.
+This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, view  basic network information as well as blocking / unblocking clients from the network. The binding will connect to the CLI
+via ssh and use an expect script style to fetch information.
 
 ## Dependencies
-* Linux (guess it could work in windows or on Mac, as long as you can install expect, not tested though)
-* expect (sudo apt install expect / sudo yum install expect / sudo zypper install expect ...)
-* ssh (Normally installed otherwise look at openssh)
-* bash (Normally installed)
+* jsch (bundle with the binding) see: https://github.com/mwiede/jsch
 
 ## Supported Things
 
 * `controller` - The Ruckus Wireless Master Controller 
 * `wirelessclient` - Any wireless client connected to the Ruckus Unleashed network network
 
-
 ## Discovery
 
 Discovery is support and recommended. Add a new bridge thing manually and after that you can discover wireless clients by pressing the scan
-button in the OpenHAB GUI.
-
+button in the OpenHAB GUI. Note that only active clients on the wireless network will be discovered.
 
 ## Binding Configuration
  
 The binding has no configuration options, all configuration is done at the Bridge and Thing levels.
-
  
 ## Bridge Configuration
 
 You need at least one Master Controller (Bridge) for this binding to work. It requires a network accessible instance of the [Master Controller].
-The system will execute expect and bash scripts that will invoke the cli. You need to install ssh and expect (sudo apt install expect openssh)
+The system will use ssh and java-expect-scripts that will invoke the cli. 
 
 The following table describes the Bridge configuration parameters:
 
@@ -39,7 +34,6 @@ The following table describes the Bridge configuration parameters:
 | username                 | The username to access the cli                  | Required | admin   |
 | password                 | The password to access the cli                  | Required | -       |
 | refresh                  | Refresh interval in seconds                     | Optional | 30      |
-
 
 ## Thing Configuration
 
@@ -58,11 +52,9 @@ Here are some additional notes regarding the thing configuration parameters:
 
 The `considerHome` parameter allows you to control how quickly the binding marks a client as away. For example, using the default of `180` (seconds), the binding will report a client away as soon as `lastSeen` + `180` (seconds) < `now`
 
-
 ## Channels
 
 The Wireless Client information that is retrieved is available as these channels:
-
 
 | Channel ID      | Item Type | Description                                                          | Permissions |
 |-----------------|-----------|--------------------------------------------------------------------- | ----------- |
@@ -83,7 +75,6 @@ The Wireless Client information that is retrieved is available as these channels
 | Status          | String    | If it is blocked/ authorized                                         | Read        |
 | Last Seen       | DateTime  | When it was last seen                                                | Read        |
 | Blocked         | Switch    | If the client is blocked from the network                            | Read/Write  |
-
 
 ### `blocked`
 
@@ -168,6 +159,8 @@ sitemap unleashed label="Unleashed Binding" {
 ```
 
 ## Changelog
+# BETA9
+- Major refactoring, removed external dependencies to expect and ssh.
 # BETA8
 - Added auto discovery
 # BETA7
