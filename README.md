@@ -159,11 +159,11 @@ sitemap unleashed label="Unleashed Binding" {
 ```
 
 ## Changelog
-# BETA9
+# BETA10
 - Major refactoring, removed external dependencies to expect and ssh.
-# BETA8
+# BETA9
 - Added auto discovery
-# BETA7
+# BETA8
 - OpenHAB 3.1x compatability by removing apache-commons
 
 ## Roadmap
