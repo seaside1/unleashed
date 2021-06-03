@@ -1,5 +1,4 @@
 # Unleashed Binding
-
 This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, view  basic network information as well as blocking / unblocking clients from the network. The binding will connect to the CLI
 via ssh and use an expect script style to fetch information.
 
