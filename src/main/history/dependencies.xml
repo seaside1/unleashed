@@ -3,6 +3,8 @@
     <ns2:feature version="0.0.0">
         <ns2:feature>openhab-runtime-base</ns2:feature>
         <ns2:feature>wrap</ns2:feature>
+        <ns2:bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsch/0.1.55_1</ns2:bundle>
+        <ns2:bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jzlib/1.1.3_2</ns2:bundle>
         <ns2:bundle>mvn:org.openhab.addons.bundles/org.openhab.binding.unleashed/3.0.0-SNAPSHOT</ns2:bundle>
         <ns2:bundle>wrap:mvn:org.lastnpe.eea/eea-all/2.2.1</ns2:bundle>
     </ns2:feature>

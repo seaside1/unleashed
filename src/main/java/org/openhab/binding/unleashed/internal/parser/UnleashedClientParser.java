@@ -35,6 +35,10 @@ import org.slf4j.LoggerFactory;
  */
 @NonNullByDefault
 public class UnleashedClientParser {
+    private static final String LINE_BREAK_PATTERN = "\\r|\n";
+    private static final String CLIENTS_PATTERN = "Clients\\:";
+    private static final String LAST = "Last";
+    private static final String CURRENT_ACTIVE_CLIENTS = "Current Active Clients:";
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final SimpleDateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static final String ERROR_PARSING_CLIENTS = "Error parsing clients: {}";
@@ -42,18 +46,19 @@ public class UnleashedClientParser {
     public List<UnleashedClient> parseClients(String cliClientsString) throws UnleashedParserException {
         List<UnleashedClient> clients = new ArrayList<UnleashedClient>();
         try {
-            logger.debug("Parsing clients from string size: {}", cliClientsString.length());
-            String clientsTrimmed = UnleashedUtil.substringAfter(cliClientsString, "Current Active Clients:");
-            String clientsTrimmedLast = UnleashedUtil.substringBeforeLast(clientsTrimmed, "Last");
-            int indexLast = clientsTrimmed.lastIndexOf("Last");
+            String cliClientsFixed = UnleashedUtil.removeAllWhiteSpaceLines(cliClientsString);
+            logger.debug("Parsing clients from string size: {}", cliClientsFixed.length());
+            String clientsTrimmed = UnleashedUtil.substringAfter(cliClientsFixed, CURRENT_ACTIVE_CLIENTS);
+            String clientsTrimmedLast = UnleashedUtil.substringBeforeLast(clientsTrimmed, LAST);
+            int indexLast = clientsTrimmed.lastIndexOf(LAST);
             clientsTrimmedLast = clientsTrimmed.substring(0, indexLast);
             logger.debug("Clients trimmed last size: {}", clientsTrimmedLast.length());
             List<String> rawClients = new ArrayList<String>();
-            Arrays.stream(clientsTrimmedLast.split("Clients\\:")).filter(rawClient -> rawClient.trim().length() > 1)
+            Arrays.stream(clientsTrimmedLast.split(CLIENTS_PATTERN)).filter(rawClient -> rawClient.trim().length() > 1)
                     .forEach(rawClient -> rawClients.add(rawClient.trim()));
 
-            rawClients.stream()
-                    .forEach(rawClient -> createUnleashedClient(clients, getKeyValues(rawClient.split("\\r|\n"))));
+            rawClients.stream().forEach(
+                    rawClient -> createUnleashedClient(clients, getKeyValues(rawClient.split(LINE_BREAK_PATTERN))));
         } catch (Exception x) {
             logger.error(ERROR_PARSING_CLIENTS, x.getMessage());
             if (logger.isDebugEnabled()) { // Avoid string creation
@@ -106,11 +111,12 @@ public class UnleashedClientParser {
 
     private class KeyValue {
 
+        private static final String SEPARATOR = "=";
         private String key;
         private String value;
 
         private KeyValue(String property) {
-            final String[] keyValue = UnleashedUtil.split(property, "=");
+            final String[] keyValue = UnleashedUtil.split(property, SEPARATOR);
             key = keyValue[0].trim();
             value = keyValue[1].trim();
         }

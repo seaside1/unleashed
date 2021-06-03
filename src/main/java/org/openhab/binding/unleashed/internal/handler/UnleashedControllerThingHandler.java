@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.UnleashedBindingConstants;
 import org.openhab.binding.unleashed.internal.UnleashedControllerThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedConnectException;
-import org.openhab.binding.unleashed.internal.api.UnleashedDependencyException;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
 import org.openhab.binding.unleashed.internal.api.model.UnleashedController;
@@ -84,9 +83,6 @@ public class UnleashedControllerThingHandler extends BaseBridgeHandler {
         } catch (UnleashedConnectException e1) {
             logger.error("Could not connect to the unleashed master controller: {}", e1.getMessage());
             updateStatus(OFFLINE, CONFIGURATION_ERROR, e1.getMessage());
-        } catch (UnleashedDependencyException e2) {
-            logger.error("Could not find missing dependcy expect: {}", e2.getMessage());
-            updateStatus(OFFLINE, CONFIGURATION_ERROR, e2.getMessage());
         } catch (UnleashedException e) {
             logger.error("Unknown error while configuring the Unleashed Controller: {}", e.getMessage());
             updateStatus(OFFLINE, CONFIGURATION_ERROR, e.getMessage());
@@ -173,7 +169,7 @@ public class UnleashedControllerThingHandler extends BaseBridgeHandler {
     private void refresh() throws UnleashedException {
         if (controller != null) {
             logger.debug("Refreshing the Unleashed Controller {}", getThing().getUID());
-            controller.refresh(config.isDemo());
+            controller.refresh();
             getThing().getThings().forEach((thing) -> {
                 if (thing.getHandler() instanceof UnleashedBaseThingHandler) {
                     ((UnleashedBaseThingHandler<?, ?>) thing.getHandler()).refresh();

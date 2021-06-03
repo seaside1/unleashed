@@ -40,6 +40,7 @@ public class UnleashedUtil {
     private static final Logger logger = LoggerFactory.getLogger(UnleashedUtil.class);
     public static final String TMP_FILE_PREFIX = "unleashed";
     public static final String TMP_FILE_RES_SUFFIX = ".res";
+    private static final String PATTERN_REMOVE_BLANKS = "(?m)^[ \t]*\r?\n";
 
     protected static final String ERROR_RESOURCE = "Can't find resource: {}";
     protected static final String DEBUG_RESOURCE = "Script Resources: {}";
@@ -137,5 +138,9 @@ public class UnleashedUtil {
 
     public static String lowerCaseOrBlank(@Nullable String str) {
         return str == null ? EMPTY : str.toLowerCase();
+    }
+
+    public static String removeAllWhiteSpaceLines(String text) {
+        return text.replaceAll(PATTERN_REMOVE_BLANKS, EMPTY);
     }
 }

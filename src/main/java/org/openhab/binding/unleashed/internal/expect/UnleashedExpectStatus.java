@@ -10,21 +10,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.openhab.binding.unleashed.internal.api;
-
-import org.eclipse.jdt.annotation.NonNullByDefault;
+package org.openhab.binding.unleashed.internal.expect;
 
 /**
- * The {@link UnleashedParserException} represents a binding specific {@link Exception}.
+ * The {@link UnleashedExpectStatus}
  *
  * @author Joseph (Seaside) Hagberg - Initial contribution
  */
-@NonNullByDefault
-public class UnleashedParserException extends UnleashedException {
-    /** */
-    private static final long serialVersionUID = 2419533860222936837L;
+public enum UnleashedExpectStatus {
+    SUCCESS,
+    NO_MATCH,
+    ERROR,
+    TIMEOUT;
 
-    public UnleashedParserException(String message) {
-        super(message);
+    public boolean isSuccess() {
+        return this == SUCCESS;
     }
 }

@@ -34,11 +34,6 @@
 				<description>The refresh interval in seconds to poll the Ruckus Unleashed cli</description>
 				<default>10</default>
 			</parameter>
-			<parameter name="demo" type="boolean" required="false">
-				<label>Run bridge in demo mode</label>
-				<description>Run bridge in demo mode simulating connected clients</description>
-				<default>false</default>
-			</parameter>
 		</config-description>
 	</bridge-type>
 	<thing-type id="client">

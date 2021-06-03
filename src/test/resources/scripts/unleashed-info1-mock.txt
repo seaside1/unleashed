@@ -1,7 +1,3 @@
-spawn ssh admin@10.0.1.14
-
-Please login: admin
-Password: 
 Welcome to Ruckus Unleashed Network Command Line Interface
 ruckus> enable
 ruckus# show l2acl name DenyAccessAll
@@ -52,5 +48,3 @@ Current Active Clients:
     Status= Authorized
  
 Last 300 Events/Activities:
- 
-ruckus#
