@@ -33,8 +33,6 @@ public class UnleashedControllerThingConfig {
 
     private String password = "";
 
-    private boolean demo = false;
-
     private int refresh = 10;
 
     public String getHost() {
@@ -65,14 +63,6 @@ public class UnleashedControllerThingConfig {
     @Override
     public String toString() {
         return "UnleashedControllerThingConfig [host=" + host + ", port=" + port + ", username=" + username
-                + ", password= *****" + ", demo=" + demo + ", refresh=" + refresh + "]";
-    }
-
-    public boolean isDemo() {
-        return demo;
-    }
-
-    public void setDemo(boolean demo) {
-        this.demo = demo;
+                + ", password= *****" + ", refresh=" + refresh + "]";
     }
 }

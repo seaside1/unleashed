@@ -30,20 +30,25 @@ import org.slf4j.LoggerFactory;
  */
 @NonNullByDefault
 public class UnleashedBlockedClientsParser {
+    private static final String MAC_ADDRESS = "MAC Address=";
+    private static final String STATIONS = "Stations:";
+    private static final String RUCKUS = "ruckus#";
+    private static final String L2_MAC_ACL = "L2/MAC ACL:";
     private static final String ERROR_PARSING_BLOCKED_CLIENTS = "Error parsing blocked clients: {}";
     private static final int MAC_ADDRESS_LENGTH = 17;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public List<String> parseBlockedClients(String cliInfoResult) throws UnleashedParserException {
+
         List<String> blockedClients = new ArrayList<String>();
         try {
-            logger.debug("Parsing blocked clients from string size: {}", cliInfoResult.length());
-            String blockedClientsTrimmed = UnleashedUtil.substringAfter(cliInfoResult, "L2/MAC ACL:");
-            String blockedClientsTrimmedLast = UnleashedUtil.substringBefore(blockedClientsTrimmed, "ruckus#");
-            String blockedClientsTrimmedMac = UnleashedUtil.substringAfter(blockedClientsTrimmedLast, "Stations:")
-                    .trim();
+            String cliClientsFixed = UnleashedUtil.removeAllWhiteSpaceLines(cliInfoResult);
+            logger.debug("Parsing blocked clients from string size: {}", cliClientsFixed.length());
+            String blockedClientsTrimmed = UnleashedUtil.substringAfter(cliClientsFixed, L2_MAC_ACL);
+            String blockedClientsTrimmedLast = UnleashedUtil.substringBefore(blockedClientsTrimmed, RUCKUS);
+            String blockedClientsTrimmedMac = UnleashedUtil.substringAfter(blockedClientsTrimmedLast, STATIONS).trim();
             logger.debug("BlockedClients trimmed last size: {}", blockedClientsTrimmedMac.length());
-            Arrays.stream(blockedClientsTrimmedMac.split("MAC Address="))
+            Arrays.stream(blockedClientsTrimmedMac.split(MAC_ADDRESS))
                     .filter(clientRaw -> clientRaw.trim().length() == MAC_ADDRESS_LENGTH)
                     .forEach(clientRaw -> blockedClients.add(clientRaw.trim().toLowerCase()));
         } catch (Exception x) {

@@ -21,23 +21,17 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.unleashed.internal.UnleashedClientThingConfig;
 import org.openhab.binding.unleashed.internal.api.UnleashedConnectException;
-import org.openhab.binding.unleashed.internal.api.UnleashedDependencyException;
 import org.openhab.binding.unleashed.internal.api.UnleashedException;
 import org.openhab.binding.unleashed.internal.api.UnleashedParserException;
 import org.openhab.binding.unleashed.internal.api.UnleashedUtil;
 import org.openhab.binding.unleashed.internal.api.cache.UnleashedClientCache;
-import org.openhab.binding.unleashed.internal.context.UnleashedCliBlockClientContext;
-import org.openhab.binding.unleashed.internal.context.UnleashedCliInfoContext;
-import org.openhab.binding.unleashed.internal.context.UnleashedCliLoginContext;
-import org.openhab.binding.unleashed.internal.context.UnleashedScriptContext;
+import org.openhab.binding.unleashed.internal.expect.UnleashedCliBlockScript;
+import org.openhab.binding.unleashed.internal.expect.UnleashedCliLoginScript;
+import org.openhab.binding.unleashed.internal.expect.UnleashedCliRefreshScript;
+import org.openhab.binding.unleashed.internal.expect.UnleashedCliUnBlockScript;
+import org.openhab.binding.unleashed.internal.expect.UnleashedExpectStatus;
 import org.openhab.binding.unleashed.internal.parser.UnleashedBlockedClientsParser;
 import org.openhab.binding.unleashed.internal.parser.UnleashedClientParser;
-import org.openhab.binding.unleashed.internal.script.UnleashedDemoClientsScript;
-import org.openhab.binding.unleashed.internal.script.UnleashedScriptCheckDeps;
-import org.openhab.binding.unleashed.internal.script.UnleashedScriptCliBlockClient;
-import org.openhab.binding.unleashed.internal.script.UnleashedScriptCliLogin;
-import org.openhab.binding.unleashed.internal.script.UnleashedScriptCliRefresh;
-import org.openhab.binding.unleashed.internal.script.UnleashedScriptCliUnBlockClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,14 +45,11 @@ import org.slf4j.LoggerFactory;
 public class UnleashedController {
 
     private static final String ACL = "openhab";
-    private static final int COMMAND_NOT_FOUND = 127;
     private final Logger logger = LoggerFactory.getLogger(UnleashedController.class);
     private final UnleashedClientCache clientsCache = new UnleashedClientCache();
     private final UnleashedClientCache insightCache = new UnleashedClientCache();
     private final Set<String> knownClientMacAddresses = new HashSet<String>();
 
-    private final UnleashedDemoClientsScript demoScript = new UnleashedDemoClientsScript();
-    private final UnleashedScriptContext demoContext;
     private final String host;
     private final int port;
     private final String username;
@@ -71,25 +62,21 @@ public class UnleashedController {
         this.port = port;
         this.username = username;
         this.password = password;
-        demoContext = new UnleashedScriptContext(demoScript);
     }
 
-    public void start() throws UnleashedException {
-        synchronized (this) {
-            checkDependencies();
-            connectToCli();
-        }
+    public synchronized void start() throws UnleashedException {
+        connectToCli();
     }
 
-    private void connectToCli() throws UnleashedException {
+    private synchronized void connectToCli() throws UnleashedException {
         logger.debug("Checking connection to cli");
-        UnleashedScriptRequest request = createUnleashedConnectToCliRequest();
-        String result = request.execute();
-        int exitCode = request.getExitCode();
-        logger.debug("Connect to Cli Request result: {} exitCode: {}", removePassword(result), exitCode);
-        if (exitCode != 0) {
+        UnleashedCliLoginScript script = new UnleashedCliLoginScript(username, password, host, port);
+        UnleashedExpectStatus status = script.execute();
+        String result = script.getTotalOutputResult();
+        logger.debug("Connect to Cli Request result: {} exitCode: {}", removePassword(result), status.name());
+        if (!status.isSuccess()) {
             throw new UnleashedConnectException(
-                    "Failed to connect to cli with result: " + removePassword(result) + " exitCode: " + exitCode);
+                    "Failed to connect to cli with result: " + removePassword(result) + " exitCode: " + status.name());
         }
     }
 
@@ -98,41 +85,14 @@ public class UnleashedController {
         return result.replaceAll(password, "******");
     }
 
-    private UnleashedScriptRequest createUnleashedConnectToCliRequest() {
-        UnleashedScriptContext context = new UnleashedCliLoginContext(username, password, host, "" + port,
-                new UnleashedScriptCliLogin());
-        logger.debug("Creating new UnleashedCliContext using: {}", context);
-        return new UnleashedScriptRequest(context);
-    }
-
     public void stop() throws UnleashedException {
-        // logout();
+        clientsCache.clear();
+        insightCache.clear();
+        knownClientMacAddresses.clear();
     }
 
-    private void checkDependencies() throws UnleashedException {
-        logger.debug("Check dependencies");
-        UnleashedScriptRequest request = createUnleashedCheckDepsRequest();
-        String result = request.execute();
-        int exitCode = request.getExitCode();
-        logger.debug("Check Deps Request result: {} exitCode: {}", result, exitCode);
-        if (exitCode == COMMAND_NOT_FOUND) {
-            throw new UnleashedDependencyException("Expect is not installed, install using \"apt install expect\"");
-        }
-    }
-
-    private UnleashedScriptRequest createUnleashedCheckDepsRequest() {
-        UnleashedScriptContext context = new UnleashedScriptContext(new UnleashedScriptCheckDeps());
-        logger.debug("Creating new UnleashedCliContext using: {}", context);
-        return new UnleashedScriptRequest(context);
-    }
-
-    public void refresh(boolean demo) throws UnleashedException {
-        synchronized (this) {
-            // accessPointsCache = getAccessPoints();
-
-            updateClientsCache(demo);
-
-        }
+    public synchronized void refresh() throws UnleashedException {
+        updateClientsCache();
     }
 
     private void upateInternalCache(UnleashedClient client) {
@@ -140,36 +100,46 @@ public class UnleashedController {
     }
 
     @SuppressWarnings("null")
-    public void blockClient(UnleashedClient client) throws UnleashedException {
+    public synchronized void blockClient(UnleashedClient client) throws UnleashedException {
         logger.debug("Executing block");
-        UnleashedScriptCliBlockClient script = new UnleashedScriptCliBlockClient();
-        UnleashedCliBlockClientContext context = new UnleashedCliBlockClientContext(username, password, host, "" + port,
-                ACL, client.getMac(), script);
-        UnleashedScriptRequest request = new UnleashedScriptRequest(context);
-        String result = request.execute();
+        UnleashedCliBlockScript script = new UnleashedCliBlockScript(username, password, host, port, ACL,
+                client.getMac());
+        UnleashedExpectStatus status = script.execute();
+        String result = script.getTotalOutputResult();
+
+        logger.debug("Request Cli Block Client result size: {}", result.length());
+        if (!status.isSuccess()) {
+            throw new UnleashedConnectException("Failed to block call to cli with result: " + removePassword(result)
+                    + " exitCode: " + status.name());
+        }
+    }
+
+    @SuppressWarnings("null")
+    public synchronized void unBlockClient(UnleashedClient client) throws UnleashedException {
+        logger.debug("Executing unblock");
+        UnleashedCliUnBlockScript script = new UnleashedCliUnBlockScript(username, password, host, port, ACL,
+                client.getMac());
+        UnleashedExpectStatus status = script.execute();
+        String result = script.getTotalOutputResult();
+        if (!status.isSuccess()) {
+            throw new UnleashedConnectException("Failed to unblock call to cli with result: " + removePassword(result)
+                    + " exitCode: " + status.name());
+        }
         logger.debug("Request Cli Blcok Client result size: {}", result.length());
     }
 
     @SuppressWarnings("null")
-    public void unBlockClient(UnleashedClient client) throws UnleashedException {
-        logger.debug("Executing block");
-        UnleashedScriptCliUnBlockClient script = new UnleashedScriptCliUnBlockClient();
-        UnleashedCliBlockClientContext context = new UnleashedCliBlockClientContext(username, password, host, "" + port,
-                ACL, client.getMac(), script);
-        UnleashedScriptRequest request = new UnleashedScriptRequest(context);
-        String result = request.execute();
-        logger.debug("Request Cli Blcok Client result size: {}", result.length());
-    }
-
-    @SuppressWarnings("null")
-    public void updateClientsCache(boolean demo) throws UnleashedException {
+    public synchronized void updateClientsCache() throws UnleashedException {
         try {
             logger.debug("Updating clients cache");
-            UnleashedScriptRequest request = demo ? createUnleashedDemoClientRequest()
-                    : createUnleashedCliInfoRequest();
-            String result = request.execute();
+            UnleashedCliRefreshScript script = new UnleashedCliRefreshScript(username, password, host, port, ACL);
+            UnleashedExpectStatus status = script.execute();
+            String result = script.getTotalOutputResult();
             logger.debug("Request Cli Info result size: {}", result.length());
-
+            if (!status.isSuccess()) {
+                throw new UnleashedConnectException("Failed to refresh call to cli with result: "
+                        + removePassword(result) + " exitCode: " + status.name());
+            }
             List<UnleashedClient> clients = clientParser.parseClients(result);
             getInsightCache().putAll(clients);
             clients.stream().forEach(client -> logger.debug("Client: {}", client.toString()));
@@ -186,7 +156,7 @@ public class UnleashedController {
         }
     }
 
-    private void setClientBlocked(String key) {
+    private synchronized void setClientBlocked(String key) {
         getClient(key).setBlocked(true);
         logger.debug("Setting client: {} blocked", key);
     }
@@ -207,10 +177,6 @@ public class UnleashedController {
             getInsightCache().put(client);
         }
         return client;
-    }
-
-    private UnleashedScriptRequest createUnleashedDemoClientRequest() {
-        return new UnleashedScriptRequest(demoContext);
     }
 
     public @Nullable UnleashedClient getClient(UnleashedClientThingConfig config) {
@@ -245,13 +211,6 @@ public class UnleashedController {
             }
         }
         return client;
-    }
-
-    private UnleashedScriptRequest createUnleashedCliInfoRequest() {
-        UnleashedCliInfoContext context = new UnleashedCliInfoContext(username, password, host, "" + port, ACL,
-                new UnleashedScriptCliRefresh());
-        logger.debug("Creating new UnleashedCliContext using: {}", context);
-        return new UnleashedScriptRequest(context);
     }
 
     public UnleashedClientCache getInsightCache() {
