@@ -5,6 +5,7 @@ via ssh and use an expect script style to fetch information.
 ## Dependencies
 * jsch (osgi bundle) see: https://mvnrepository.com/artifact/org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsch/0.1.55_1
 * jzlib (osgi bundle) see https://mvnrepository.com/artifact/org.apache.servicemix.bundles/org.apache.servicemix.bundles.jzlib/1.1.3_2
+Note, the dependencies are bundled with binding, there is no need to include them manually.
 
 ## Supported Things
 
