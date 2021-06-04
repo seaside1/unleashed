@@ -97,6 +97,7 @@ public class UnleashedController {
 
     private void upateInternalCache(UnleashedClient client) {
         clientsCache.put(client);
+        insightCache.put(client);
     }
 
     @SuppressWarnings("null")
@@ -179,35 +180,33 @@ public class UnleashedController {
         return client;
     }
 
-    public @Nullable UnleashedClient getClient(UnleashedClientThingConfig config) {
+    public @Nullable synchronized UnleashedClient getClient(UnleashedClientThingConfig config) {
         UnleashedClient client = null;
         String mac = config.getMac();
         knownClientMacAddresses.add(mac.toLowerCase());
         logger.debug("Adding mac to ThingUsedCache: {} sizeOf ThingUsed: {}", mac, knownClientMacAddresses.size());
         Calendar lastSeen = null;
         if (UnleashedUtil.isNotBlank(mac)) {
-            synchronized (this) {
-                client = getClient(mac);
-                lastSeen = client.getLastSeen();
-                boolean isInClientsCache = clientsCache.getClient(client.getMac()) != null;
-                Boolean online = isInClientsCache;
-                if (lastSeen != null && !isInClientsCache) {
-                    Calendar newLastSeen = (Calendar) lastSeen.clone();
-                    newLastSeen.add(Calendar.SECOND, config.getConsiderHome());
-                    Calendar now = Calendar.getInstance();
-                    online = (now.compareTo(newLastSeen) < 0);
-                } else if (isInClientsCache) {
-                    online = Boolean.TRUE;
-                }
-                client.setOnline(online);
+            client = getClient(mac);
+            lastSeen = client.getLastSeen();
+            boolean isInClientsCache = clientsCache.getClient(client.getMac()) != null;
+            Boolean online = isInClientsCache;
+            if (lastSeen != null && !isInClientsCache) {
+                Calendar newLastSeen = (Calendar) lastSeen.clone();
+                newLastSeen.add(Calendar.SECOND, config.getConsiderHome());
+                Calendar now = Calendar.getInstance();
+                online = (now.compareTo(newLastSeen) < 0);
+            } else if (isInClientsCache) {
+                online = Boolean.TRUE;
+            }
+            client.setOnline(online);
 
-                if (isInClientsCache) {
-                    client.setLastSeen(Calendar.getInstance());
-                }
+            if (isInClientsCache) {
+                client.setLastSeen(Calendar.getInstance());
+            }
 
-                if (!online) {
-                    client.setConnectedSince(null);
-                }
+            if (!online) {
+                client.setConnectedSince(null);
             }
         }
         return client;
