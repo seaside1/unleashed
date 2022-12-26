@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2020 Contributors to the openHAB project
+ * Copyright (c) 2010-2022 Contributors to the openHAB project
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information.
@@ -13,9 +13,9 @@
 package org.openhab.binding.unleashed.internal.api.cache;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -31,7 +31,11 @@ import org.openhab.binding.unleashed.internal.api.model.UnleashedClient;
 @NonNullByDefault
 public class UnleashedClientCache {
 
-    private final Map<String, UnleashedClient> macToUnleashedClient = new HashMap<>();
+    private final LinkedHashMap<String, UnleashedClient> macToUnleashedClient;
+
+    public UnleashedClientCache(int fifoSize) {
+        macToUnleashedClient = new UnleashedFifoMap(fifoSize);
+    }
 
     public void put(UnleashedClient client) {
         macToUnleashedClient.put(generateKey(client), client);
@@ -55,5 +59,38 @@ public class UnleashedClientCache {
 
     public void putAll(List<UnleashedClient> clients) {
         clients.stream().forEach(client -> put(client));
+    }
+
+    /**
+     * The {@link UnleashedFifoMap} size of FifoMap
+     *
+     *
+     * @author Joseph Hagberg - Initial contribution
+     */
+    private class UnleashedFifoMap extends LinkedHashMap<String, UnleashedClient> {
+        private final int capacity;
+
+        private static final long serialVersionUID = 1L;
+
+        public UnleashedFifoMap(int capacity) {
+            super(capacity + 1);
+            this.capacity = capacity;
+        }
+
+        @Override
+        public @Nullable UnleashedClient put(@Nullable String key, @Nullable UnleashedClient value) {
+            UnleashedClient client = super.put(key, value);
+            if (size() > capacity) {
+                removeEldest();
+            }
+            return client;
+        }
+
+        private void removeEldest() {
+            Iterator<String> it = this.keySet().iterator();
+            if (it.hasNext()) {
+                remove(it.next());
+            }
+        }
     }
 }

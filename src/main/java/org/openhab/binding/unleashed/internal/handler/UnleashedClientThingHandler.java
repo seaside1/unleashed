@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2020 Contributors to the openHAB project
+ * Copyright (c) 2010-2022 Contributors to the openHAB project
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information.
@@ -112,8 +112,9 @@ public class UnleashedClientThingHandler
                 }
                 break;
             case CHANNEL:
-                if (clientHome && client.getChannel() != null) {
-                    state = new DecimalType(client.getChannel());
+                Integer clientChannel = client.getChannel();
+                if (clientHome && clientChannel != null) {
+                    state = new DecimalType(clientChannel);
                 }
                 break;
             case CONNECTED_SINCE:

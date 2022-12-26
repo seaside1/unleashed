@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2020 Contributors to the openHAB project
+ * Copyright (c) 2010-2022 Contributors to the openHAB project
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information.
@@ -24,6 +24,8 @@ public class UnleashedCliRefreshScript extends UnleashedAbstractExpectScript {
     private static final String UNLEASHED_CMD_LIST_ACL = "show l2acl name ";
     private static final String UNLEASHED_CMD_ACTIVE_CLIENTS = "show current-active-clients all";
 
+    private static final long ACTIVE_CLIENTS_TIMEOUT = 4000;
+
     public UnleashedCliRefreshScript(String username, String password, String host, int port, String aclListName) {
         super(username, password, host, port);
         this.aclListName = aclListName;
@@ -36,7 +38,7 @@ public class UnleashedCliRefreshScript extends UnleashedAbstractExpectScript {
             status = expect.enter(UNLEASHED_CMD_LIST_ACL.concat(aclListName));
             status = expect.expect(EXPECT_CLI_PROMPT, DEFAULT_EXPECT_TIMEOUT);
             status = expect.enter(UNLEASHED_CMD_ACTIVE_CLIENTS);
-            status = expect.expect(EXPECT_CLI_PROMPT, DEFAULT_EXPECT_TIMEOUT);
+            status = expect.expect(EXPECT_CLI_PROMPT, ACTIVE_CLIENTS_TIMEOUT);
             status = expect.enter(UNLEASHED_CMD_QUIT);
             status = expect.expect(UNLEASHED_CMD_QUIT, DEFAULT_EXPECT_TIMEOUT);
             return status;

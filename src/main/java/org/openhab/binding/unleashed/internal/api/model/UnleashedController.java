@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2020 Contributors to the openHAB project
+ * Copyright (c) 2010-2022 Contributors to the openHAB project
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information.
@@ -46,8 +46,8 @@ public class UnleashedController {
 
     private static final String ACL = "openhab";
     private final Logger logger = LoggerFactory.getLogger(UnleashedController.class);
-    private final UnleashedClientCache clientsCache = new UnleashedClientCache();
-    private final UnleashedClientCache insightCache = new UnleashedClientCache();
+    private final UnleashedClientCache clientsCache = new UnleashedClientCache(1000);
+    private final UnleashedClientCache insightCache = new UnleashedClientCache(200);
     private final Set<String> knownClientMacAddresses = new HashSet<String>();
 
     private final String host;
