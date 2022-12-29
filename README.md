@@ -160,6 +160,9 @@ sitemap unleashed label="Unleashed Binding" {
 ```
 
 ## Changelog
+### BETA11
+- Removed potential memory leakage
+- Updated to openHAB 3.4
 ### BETA10
 - Major refactoring, removed external dependencies to expect and ssh.
 ### BETA9
