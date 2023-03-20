@@ -14,7 +14,7 @@ Note, the dependencies are bundled with binding, there is no need to include the
 
 ## Discovery
 
-Discovery is support and recommended. Add a new bridge thing manually and after that you can discover wireless clients by pressing the scan
+Discovery is supported and recommended. Add a new bridge thing manually and after that you can discover wireless clients by pressing the scan
 button in the openHAB GUI. Note that only active clients on the wireless network will be discovered.
 
 ## Binding Configuration
