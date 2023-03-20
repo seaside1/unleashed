@@ -1,5 +1,5 @@
 # Unleashed Binding
-This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an OpenHAB instance to leverage presence detection, view  basic network information as well as blocking / unblocking clients from the network. The binding will connect to the CLI
+This binding integrates with [Ruckus Unleashed Networks](https://support.ruckuswireless.com/product_families/19-ruckus-unleashed) enabling an openHAB instance to leverage presence detection, view  basic network information as well as blocking / unblocking clients from the network. The binding will connect to the CLI
 via ssh and use an expect script style to fetch information.
 
 ## Dependencies
@@ -15,7 +15,7 @@ Note, the dependencies are bundled with binding, there is no need to include the
 ## Discovery
 
 Discovery is support and recommended. Add a new bridge thing manually and after that you can discover wireless clients by pressing the scan
-button in the OpenHAB GUI. Note that only active clients on the wireless network will be discovered.
+button in the openHAB GUI. Note that only active clients on the wireless network will be discovered.
 
 ## Binding Configuration
  
@@ -103,7 +103,7 @@ to do so. Note if you don't want to use block / unblock functionality this is no
 
 ## Full Example
 
-Please add things using the OpenHAB GUI. I've kept the unleashed.things for reference.
+Please add things using the openHAB GUI. I've kept the unleashed.things for reference.
 
 things/unleashed.things
 
@@ -168,7 +168,7 @@ sitemap unleashed label="Unleashed Binding" {
 ### BETA9
 - Added auto discovery
 ### BETA8
-- OpenHAB 3.1x compatability by removing apache-commons
+- openHAB 3.1x compatability by removing apache-commons
 
 ## Roadmap
 
